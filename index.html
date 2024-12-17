@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des élèves</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #container {
+            margin: auto;
+            max-width: 400px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 8px;
+            font-size: 14px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            background-color: #ff5555;
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #e04444;
+        }
+        .student-link {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .student-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des élèves</h1>
+    <div id="container">
+        <input type="text" id="studentName" placeholder="Entrez le nom de l'élève">
+        <button onclick="addStudent()">Ajouter</button>
+        <ul id="studentList"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadStudents);
+
+        function addStudent() {
+            const input = document.getElementById('studentName');
+            const name = input.value.trim();
+
+            if (name) {
+                const ul = document.getElementById('studentList');
+                const li = document.createElement('li');
+                li.innerHTML = `<a href='eleve.html?name=${encodeURIComponent(name)}' class='student-link'>${name}</a> <button class='delete-btn' onclick='deleteStudent(this)'>Supprimer</button>`;
+                ul.appendChild(li);
+                saveStudents();
+                input.value = '';
+            }
+        }
+
+        function deleteStudent(button) {
+            const li = button.parentElement;
+            li.remove();
+            saveStudents();
+        }
+
+        function saveStudents() {
+            const ul = document.getElementById('studentList');
+            const students = [];
+            ul.querySelectorAll('li').forEach(li => {
+                const link = li.querySelector('a');
+                students.push(link.textContent);
+            });
+            localStorage.setItem('studentList', JSON.stringify(students));
+        }
+
+        function loadStudents() {
+            const savedStudents = JSON.parse(localStorage.getItem('studentList')) || [];
+            const ul = document.getElementById('studentList');
+            savedStudents.forEach(name => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href='eleve.html?name=${encodeURIComponent(name)}' class='student-link'>${name}</a> <button class='delete-btn' onclick='deleteStudent(this)'>Supprimer</button>`;
+                ul.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
