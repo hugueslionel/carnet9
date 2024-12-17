@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de l'élève</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        section {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="studentName">Page de l'élève</h1>
+    <section>
+      <h2>Je reconnais les lettres majuscules</h2>
+      <div id="exercice1"></div>
+    </section>
+   <section>
+      <h2>Je reconnais les lettres minuscules</h2>
+      <div id="exercice2"></div>
+   </section>
+    <section>
+      <h2>Je reconnais les lettres cursives</h2>
+      <div id="exercice3"></div>
+    </section>
+  <section>
+    <h2>Je sais compter jusqu'à: </h2>
+    <div id="exercice4"></div>
+  </section>
+  <section>
+    <h2>Je sais lire les nombres</h2>
+    <div id="exercice5"></div>
+  
+  <section>
+    <h2>Je reconnais les formes géométriques</h2>
+    <div id="exercice6"></div>
+  </section>
+
+<section>
+    <h2>Je sais dénombrer</h2>
+    <div id="exercice7"></div>
+</section>
+
+   
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name');
+        if (name) {
+            document.getElementById('studentName').textContent = `${name}`;
+        }
+    </script>
+  <script src="exercice.js"></script>
+  <script src="exercice6.js"></script>
+  <script src="exercice7.js"></script>
+
+</body>
+</html>
