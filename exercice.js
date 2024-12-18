@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const alphabetUpper = ["B", "A", "C", "D", "F", "E", "H", "G", "I", "J", "L", "K", "M", 
                            "O", "N", "Q", "P", "S", "R", "T", "U", "V", "W", "X", "Y", "Z"];
     const alphabetLower = ["b", "a", "c", "d", "f", "e", "h", "g", "i", "j", "l", "k", "m", 
@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
 
     // Fonction pour créer les exercices
-    function createExercise(containerId, data, storageKey, rows, cols, fontFamily = "Arial, sans-serif") {
+    async function createExercise(containerId, data, storageKey, rows, cols, fontFamily = "Arial, sans-serif") {
         const tableContainer = document.getElementById(containerId);
-        let savedStates = JSON.parse(localStorage.getItem(`${storageKey}_${studentName}`)) || {};
-
+        const savedStates = (await loadState(`${storageKey}_${studentName}`)) || {};
+        
         function renderTable() {
             const table = document.createElement("table");
             table.style.borderCollapse = "collapse";
@@ -55,12 +55,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 cell.style.backgroundColor = "#d4edda";
                 savedStates[key] = true;
             }
-            saveState();
+            saveState(`${storageKey}_${studentName}`, savedStates);
         }
 
-        function saveState() {
-            localStorage.setItem(`${storageKey}_${studentName}`, JSON.stringify(savedStates));
-        }
+       
 
         renderTable();
     }
