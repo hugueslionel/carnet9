@@ -1,13 +1,12 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
 
     // Fonction pour créer l'exercice des images de formes géométriques
-    function createImageExercise(containerId, images, storageKey) {
+    async function createImageExercise(containerId, images, storageKey) {
         const container = document.getElementById(containerId);
         container.innerHTML = ""; // Nettoie le conteneur avant d'afficher
 
-        let savedStates = JSON.parse(localStorage.getItem(`${storageKey}_${studentName}`)) || {};
-
+        const savedStates = (await loadState(`${storageKey}_${studentName}`)) || {};
         const grid = document.createElement("div");
         grid.style.display = "flex";
         grid.style.flexWrap = "wrap";
@@ -46,12 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     box.style.backgroundColor = "#d4edda";
                     savedStates[index] = true;
                 }
-                saveState();
+                saveState(`${storageKey}_${studentName}`, savedStates);
             });
 
-            function saveState() {
-                localStorage.setItem(`${storageKey}_${studentName}`, JSON.stringify(savedStates));
-            }
+           
 
             // Ajout de l'image et de la case au conteneur
             item.appendChild(img);
