@@ -137,22 +137,41 @@
             saveStudents();
         }
         // Fonction pour réinitialiser toutes les données dans IndexedDB
-        function resetDatabase() {
-            const request = indexedDB.deleteDatabase("exercicesDB");
-
-            request.onsuccess = () => {
-                alert("Toutes les données ont été réinitialisées !");
-                location.reload(); // Recharge la page pour repartir à zéro
+function resetDatabase() {
+    // Fermer toutes les connexions à IndexedDB
+    const dbConnections = indexedDB.databases();
+    dbConnections.then((databases) => {
+        databases.forEach((db) => {
+            const request = indexedDB.open(db.name);
+            request.onsuccess = (event) => {
+                event.target.result.close();
             };
+        });
 
-            request.onerror = () => {
-                alert("Erreur lors de la réinitialisation de la base de données.");
-            };
+        // Supprimer la base de données
+        const deleteRequest = indexedDB.deleteDatabase("exercicesDB");
 
-            request.onblocked = () => {
-                alert("Impossible de réinitialiser car une autre session utilise la base.");
-            };
-        }
+        deleteRequest.onsuccess = () => {
+            // Réinitialiser la liste locale des élèves
+            students = []; // Assurez-vous que cette variable existe dans votre code principal
+
+            alert("Toutes les données ont été réinitialisées !");
+            location.reload(); // Recharge la page pour repartir à zéro
+        };
+
+        deleteRequest.onerror = () => {
+            alert("Erreur lors de la réinitialisation de la base de données.");
+        };
+
+        deleteRequest.onblocked = () => {
+            alert(
+                "Impossible de réinitialiser car une autre session utilise la base. Veuillez fermer tous les onglets utilisant cette base."
+            );
+        };
+    });
+}
+
+
 
         // Attacher la fonction au bouton
         document.getElementById("reset-db").addEventListener("click", resetDatabase);
