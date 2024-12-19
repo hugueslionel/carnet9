@@ -63,6 +63,7 @@
         <button onclick="addStudent()">Ajouter</button>
         <ul id="studentList"></ul>
     </div>
+    <button id="reset-db" style="background-color: red; color: white; margin-top: 20px;">Réinitialiser</button>
 
     <script>
         document.addEventListener("DOMContentLoaded", loadStudents);
@@ -135,6 +136,26 @@
             li.remove();
             saveStudents();
         }
+        // Fonction pour réinitialiser toutes les données dans IndexedDB
+        function resetDatabase() {
+            const request = indexedDB.deleteDatabase("exercicesDB");
+
+            request.onsuccess = () => {
+                alert("Toutes les données ont été réinitialisées !");
+                location.reload(); // Recharge la page pour repartir à zéro
+            };
+
+            request.onerror = () => {
+                alert("Erreur lors de la réinitialisation de la base de données.");
+            };
+
+            request.onblocked = () => {
+                alert("Impossible de réinitialiser car une autre session utilise la base.");
+            };
+        }
+
+        // Attacher la fonction au bouton
+        document.getElementById("reset-db").addEventListener("click", resetDatabase);
     </script>
 </body>
 </html>
