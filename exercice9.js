@@ -2,56 +2,26 @@ document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
     const storageKey = `exercice9_${studentName}`;
 
-    // Charger les positions initiales ou sauvegardées
     const initialPositions = [
-        { id: "img1", src: "images/objet1.png", row: 0, col: 0 },
-        { id: "img2", src: "images/objet2.png", row: 1, col: 2 },
-        { id: "img3", src: "images/objet3.png", row: 2, col: 4 }
+        { id: "animal1", src: "images/animal1.jpeg", row: null, col: null },
+        { id: "animal2", src: "images/animal2.jpeg", row: null, col: null },
+        { id: "animal3", src: "images/animal3.jpeg", row: null, col: null },
+        { id: "animal4", src: "images/animal4.jpeg", row: null, col: null },
+        { id: "animal5", src: "images/animal5.jpeg", row: null, col: null }
     ];
 
     const savedPositions = await loadState(storageKey);
     const positions = savedPositions.length ? savedPositions : initialPositions;
 
-    const tableContainer = document.getElementById("exercice9");
+    const container = document.getElementById("exercise9-container");
 
-    // Crée un tableau de 5x5
-    const rows = 5;
-    const cols = 5;
-    const table = document.createElement("table");
-    table.style.borderCollapse = "collapse";
-    table.style.margin = "20px auto";
+    // Bandeau des images
+    const imageBand = document.createElement("div");
+    imageBand.style.display = "flex";
+    imageBand.style.gap = "20px";
+    imageBand.style.marginBottom = "40px";
+    imageBand.style.justifyContent = "center";
 
-    // Création des cellules
-    for (let i = 0; i < rows; i++) {
-        const tr = document.createElement("tr");
-        for (let j = 0; j < cols; j++) {
-            const td = document.createElement("td");
-            td.style.width = "100px";
-            td.style.height = "100px";
-            td.style.border = "1px solid #ccc";
-            td.style.position = "relative";
-            td.dataset.row = i;
-            td.dataset.col = j;
-
-            // Permet de déposer des images
-            td.addEventListener("dragover", (event) => event.preventDefault());
-            td.addEventListener("drop", (event) => {
-                event.preventDefault();
-                const imgId = event.dataTransfer.getData("text");
-                const img = document.getElementById(imgId);
-                if (img) {
-                    td.appendChild(img);
-                    updatePositions(imgId, i, j);
-                }
-            });
-
-            tr.appendChild(td);
-        }
-        table.appendChild(tr);
-    }
-    tableContainer.appendChild(table);
-
-    // Ajouter les images aux bonnes positions
     positions.forEach((pos) => {
         const img = document.createElement("img");
         img.id = pos.id;
@@ -61,18 +31,61 @@ document.addEventListener("DOMContentLoaded", async function () {
         img.style.cursor = "grab";
         img.draggable = true;
 
-        // Gestion du drag
         img.addEventListener("dragstart", (event) => {
             event.dataTransfer.setData("text", event.target.id);
         });
 
-        const targetCell = table.querySelector(`[data-row='${pos.row}'][data-col='${pos.col}']`);
-        if (targetCell) {
-            targetCell.appendChild(img);
+        if (pos.row === null && pos.col === null) {
+            imageBand.appendChild(img); // Ajoute l'image au bandeau si elle n'est pas dans le tableau
         }
     });
 
-    // Mise à jour des positions et sauvegarde
+    // Tableau de rangement
+    const table = document.createElement("table");
+    table.style.borderCollapse = "collapse";
+    table.style.margin = "auto";
+
+    const tr = document.createElement("tr");
+    for (let col = 0; col < 5; col++) {
+        const td = document.createElement("td");
+        td.style.width = "100px";
+        td.style.height = "100px";
+        td.style.border = "1px solid #ccc";
+        td.style.position = "relative";
+        td.dataset.row = 0;
+        td.dataset.col = col;
+
+        td.addEventListener("dragover", (event) => event.preventDefault());
+        td.addEventListener("drop", (event) => {
+            event.preventDefault();
+            const imgId = event.dataTransfer.getData("text");
+            const img = document.getElementById(imgId);
+            if (img) {
+                td.appendChild(img);
+                updatePositions(imgId, 0, col);
+            }
+        });
+
+        tr.appendChild(td);
+    }
+    table.appendChild(tr);
+
+    // Ajoute le bandeau et le tableau au conteneur
+    container.appendChild(imageBand);
+    container.appendChild(table);
+
+    // Placement des images sauvegardées dans le tableau
+    positions.forEach((pos) => {
+        if (pos.row !== null && pos.col !== null) {
+            const img = document.getElementById(pos.id);
+            const targetCell = table.querySelector(`[data-row='${pos.row}'][data-col='${pos.col}']`);
+            if (img && targetCell) {
+                targetCell.appendChild(img);
+            }
+        }
+    });
+
+    // Mise à jour des positions
     function updatePositions(imgId, row, col) {
         const index = positions.findIndex((pos) => pos.id === imgId);
         if (index !== -1) {
