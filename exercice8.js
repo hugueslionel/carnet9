@@ -32,25 +32,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 cell.textContent = day;
                 cell.style.backgroundColor = savedColors[cellKey] || "#fff";
 
-                // Gestion du clic : Afficher une palette de couleurs
+                // Gestion du clic : Affiche les pastilles de couleur
                 cell.addEventListener("click", () => {
-                    const colorPicker = document.createElement("input");
-                    colorPicker.type = "color";
-                    colorPicker.style.position = "absolute";
-                    colorPicker.style.opacity = "0"; // Invisible
-                    document.body.appendChild(colorPicker);
-
-                    // Quand une couleur est choisie
-                    colorPicker.addEventListener("input", (event) => {
-                        const color = event.target.value;
-                        cell.style.backgroundColor = color;
-                        savedColors[cellKey] = color;
-                        saveState(`${storageKey}_${studentName}`, savedColors);
-                        document.body.removeChild(colorPicker); // Supprime le color picker
-                    });
-
-                    // Simuler un clic pour ouvrir le sélecteur
-                    colorPicker.click();
+                    showColorPicker(cell, savedColors, cellKey, storageKey);
                 });
 
                 row.appendChild(cell);
@@ -60,6 +44,85 @@ document.addEventListener("DOMContentLoaded", async function () {
             tableContainer.appendChild(table);
             container.appendChild(tableContainer);
         });
+    }
+
+    function showColorPicker(cell, savedColors, cellKey, storageKey) {
+        // Supprime un éventuel color picker existant
+        const existingPicker = document.getElementById("colorPicker");
+        if (existingPicker) existingPicker.remove();
+
+        // Crée le conteneur des pastilles
+        const picker = document.createElement("div");
+        picker.id = "colorPicker";
+        picker.style.position = "absolute";
+        picker.style.top = `${cell.getBoundingClientRect().bottom + window.scrollY}px`;
+        picker.style.left = `${cell.getBoundingClientRect().left + window.scrollX}px`;
+        picker.style.display = "flex";
+        picker.style.gap = "10px";
+        picker.style.padding = "10px";
+        picker.style.background = "#fff";
+        picker.style.border = "1px solid #ccc";
+        picker.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
+        picker.style.zIndex = "1000";
+
+        // Ajoute les trois pastilles de couleur
+        const colors = { bleu: "#d6eaff", vert: "#d4edda", jaune: "#fffacc" };
+
+        Object.keys(colors).forEach((colorName) => {
+            const colorCircle = document.createElement("div");
+            colorCircle.style.width = "30px";
+            colorCircle.style.height = "30px";
+            colorCircle.style.borderRadius = "50%";
+            colorCircle.style.backgroundColor = colors[colorName];
+            colorCircle.style.cursor = "pointer";
+
+            // Applique la couleur au clic
+            colorCircle.addEventListener("click", () => {
+                cell.style.backgroundColor = colors[colorName];
+                savedColors[cellKey] = colors[colorName];
+                saveState(`${storageKey}_${studentName}`, savedColors);
+                picker.remove();
+            });
+
+            picker.appendChild(colorCircle);
+        });
+
+        // Ajoute une option pour réinitialiser la couleur
+        const resetButton = document.createElement("div");
+        resetButton.textContent = "×";
+        resetButton.style.width = "30px";
+        resetButton.style.height = "30px";
+        resetButton.style.display = "flex";
+        resetButton.style.alignItems = "center";
+        resetButton.style.justifyContent = "center";
+        resetButton.style.border = "1px solid #ccc";
+        resetButton.style.borderRadius = "50%";
+        resetButton.style.cursor = "pointer";
+        resetButton.style.fontSize = "20px";
+        resetButton.style.color = "#000";
+
+        resetButton.addEventListener("click", () => {
+            cell.style.backgroundColor = "#fff";
+            delete savedColors[cellKey];
+            saveState(`${storageKey}_${studentName}`, savedColors);
+            picker.remove();
+        });
+
+        picker.appendChild(resetButton);
+
+        document.body.appendChild(picker);
+
+        // Supprime le color picker au clic en dehors
+        document.addEventListener(
+            "click",
+            function closePicker(event) {
+                if (!picker.contains(event.target) && event.target !== cell) {
+                    picker.remove();
+                    document.removeEventListener("click", closePicker);
+                }
+            },
+            { once: true }
+        );
     }
 
     // Données des tableaux
