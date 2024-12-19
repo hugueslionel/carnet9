@@ -59,122 +59,53 @@
 <body>
     <h1>Liste des élèves</h1>
     <div id="container">
-    <input type="text" id="student-name" placeholder="Entrez un nom d'élève">
-    <button id="add-student">Ajouter</button>
-    <ul id="student-list"></ul>
+        <input type="text" id="studentName" placeholder="Entrez le nom de l'élève">
+        <button onclick="addStudent()">Ajouter</button>
+        <ul id="studentList"></ul>
     </div>
 
     <script>
-        // IndexedDB functions
-        function openDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open("elevesDB", 1);
+        document.addEventListener("DOMContentLoaded", loadStudents);
 
-                request.onupgradeneeded = (event) => {
-                    const db = event.target.result;
-                    if (!db.objectStoreNames.contains("eleves")) {
-                        db.createObjectStore("eleves", { keyPath: "id", autoIncrement: true });
-                    }
-                };
+        function addStudent() {
+            const input = document.getElementById('studentName');
+            const name = input.value.trim();
 
-                request.onsuccess = (event) => resolve(event.target.result);
-                request.onerror = (event) => reject("Erreur d'ouverture de la base IndexedDB.");
-            });
+            if (name) {
+                const ul = document.getElementById('studentList');
+                const li = document.createElement('li');
+                li.innerHTML = `<a href='eleve.html?name=${encodeURIComponent(name)}' class='student-link'>${name}</a> <button class='delete-btn' onclick='deleteStudent(this)'>Supprimer</button>`;
+                ul.appendChild(li);
+                saveStudents();
+                input.value = '';
+            }
         }
 
-        function saveStudents(students) {
-            return openDB().then((db) => {
-                return new Promise((resolve, reject) => {
-                    const transaction = db.transaction("eleves", "readwrite");
-                    const store = transaction.objectStore("eleves");
+        function deleteStudent(button) {
+            const li = button.parentElement;
+            li.remove();
+            saveStudents();
+        }
 
-                    // Clear old data
-                    store.clear().onsuccess = () => {
-                        // Add new data
-                        students.forEach((student) => {
-                            store.add({ name: student });
-                        });
-                        transaction.oncomplete = resolve;
-                        transaction.onerror = reject;
-                    };
-                });
+        function saveStudents() {
+            const ul = document.getElementById('studentList');
+            const students = [];
+            ul.querySelectorAll('li').forEach(li => {
+                const link = li.querySelector('a');
+                students.push(link.textContent);
             });
+            localStorage.setItem('studentList', JSON.stringify(students));
         }
 
         function loadStudents() {
-            return openDB().then((db) => {
-                return new Promise((resolve, reject) => {
-                    const transaction = db.transaction("eleves", "readonly");
-                    const store = transaction.objectStore("eleves");
-                    const request = store.getAll();
-
-                    request.onsuccess = () => resolve(request.result.map((entry) => entry.name));
-                    request.onerror = reject;
-                });
+            const savedStudents = JSON.parse(localStorage.getItem('studentList')) || [];
+            const ul = document.getElementById('studentList');
+            savedStudents.forEach(name => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href='eleve.html?name=${encodeURIComponent(name)}' class='student-link'>${name}</a> <button class='delete-btn' onclick='deleteStudent(this)'>Supprimer</button>`;
+                ul.appendChild(li);
             });
         }
-
-        // DOM manipulation and persistence
-        const studentList = document.getElementById("student-list");
-        const studentNameInput = document.getElementById("student-name");
-        const addStudentButton = document.getElementById("add-student");
-
-        let students = [];
-
-        // Add student
-        function addStudent(name) {
-            if (!name.trim()) return;
-            students.push(name.trim());
-            renderStudents();
-            saveStudents(students).catch(console.error);
-        }
-
-        // Remove student
-        function removeStudent(index) {
-            students.splice(index, 1);
-            renderStudents();
-            saveStudents(students).catch(console.error);
-        }
-
-        // Render student list
-        function renderStudents() {
-            studentList.innerHTML = "";
-            students.forEach((student, index) => {
-                const li = document.createElement("li");
-                li.textContent = student;
-
-                const removeButton = document.createElement("button");
-                removeButton.textContent = "Supprimer";
-                removeButton.onclick = () => removeStudent(index);
-
-                li.appendChild(removeButton);
-                studentList.appendChild(li);
-            });
-        }
-
-        // Load students on page load
-        window.addEventListener("DOMContentLoaded", () => {
-            loadStudents()
-                .then((loadedStudents) => {
-                    students = loadedStudents;
-                    renderStudents();
-                })
-                .catch(console.error);
-        });
-
-        // Add student on button click
-        addStudentButton.addEventListener("click", () => {
-            addStudent(studentNameInput.value);
-            studentNameInput.value = "";
-        });
-
-        // Add student on "Enter" key press
-        studentNameInput.addEventListener("keypress", (event) => {
-            if (event.key === "Enter") {
-                addStudent(studentNameInput.value);
-                studentNameInput.value = "";
-            }
-        });
     </script>
 </body>
 </html>
