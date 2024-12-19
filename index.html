@@ -64,6 +64,30 @@
         <ul id="studentList"></ul>
     </div>
     <button id="reset-db" style="background-color: red; color: white; margin-top: 20px;">Réinitialiser</button>
+<script>
+    let students = []; // Liste locale des élèves
+
+    function resetDatabase() {
+        indexedDB.databases().then((databases) => {
+            databases.forEach((db) => {
+                const deleteRequest = indexedDB.deleteDatabase(db.name);
+                deleteRequest.onsuccess = () => {
+                    console.log(`Base de données "${db.name}" supprimée.`);
+                };
+                deleteRequest.onerror = () => {
+                    console.error(`Erreur lors de la suppression de "${db.name}".`);
+                };
+            });
+        });
+
+        // Réinitialiser les données locales
+        students = [];
+        alert("Toutes les données ont été réinitialisées !");
+        location.reload();
+    }
+
+    document.getElementById("reset-db").addEventListener("click", resetDatabase);
+</script>
 
     <script>
         document.addEventListener("DOMContentLoaded", loadStudents);
@@ -136,45 +160,6 @@
             li.remove();
             saveStudents();
         }
-        // Fonction pour réinitialiser toutes les données dans IndexedDB
-function resetDatabase() {
-    // Fermer toutes les connexions à IndexedDB
-    const dbConnections = indexedDB.databases();
-    dbConnections.then((databases) => {
-        databases.forEach((db) => {
-            const request = indexedDB.open(db.name);
-            request.onsuccess = (event) => {
-                event.target.result.close();
-            };
-        });
-
-        // Supprimer la base de données
-        const deleteRequest = indexedDB.deleteDatabase("exercicesDB");
-
-        deleteRequest.onsuccess = () => {
-            // Réinitialiser la liste locale des élèves
-            Students = []; // Assurez-vous que cette variable existe dans votre code principal
-
-            alert("Toutes les données ont été réinitialisées !");
-            location.reload(); // Recharge la page pour repartir à zéro
-        };
-
-        deleteRequest.onerror = () => {
-            alert("Erreur lors de la réinitialisation de la base de données.");
-        };
-
-        deleteRequest.onblocked = () => {
-            alert(
-                "Impossible de réinitialiser car une autre session utilise la base. Veuillez fermer tous les onglets utilisant cette base."
-            );
-        };
-    });
-}
-
-
-
-        // Attacher la fonction au bouton
-        document.getElementById("reset-db").addEventListener("click", resetDatabase);
     </script>
 </body>
 </html>
