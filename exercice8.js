@@ -7,19 +7,14 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         const savedColors = (await loadState(`${storageKey}_${studentName}`)) || {};
 
-        const tableContainer = document.createElement("div");
-        tableContainer.style.display = "flex";
-        tableContainer.style.justifyContent = "space-around";
-        tableContainer.style.gap = "20px";
-        tableContainer.style.margin = "20px";
-
         data.forEach((rowData, tableIndex) => {
+            const tableContainer = document.createElement("div");
+            tableContainer.style.marginBottom = "20px"; // Espacement vertical entre les tableaux
+
             const table = document.createElement("table");
             table.style.borderCollapse = "collapse";
-
-            // Applique la police spécifique
+            table.style.margin = "0 auto";
             table.style.fontFamily = fonts[tableIndex];
-            table.style.margin = "10px";
 
             const row = document.createElement("tr");
 
@@ -37,28 +32,25 @@ document.addEventListener("DOMContentLoaded", async function () {
                 cell.textContent = day;
                 cell.style.backgroundColor = savedColors[cellKey] || "#fff";
 
-                // Gestion du clic pour choisir une couleur
+                // Gestion du clic : Afficher une palette de couleurs
                 cell.addEventListener("click", () => {
-                    const color = prompt(
-                        "Choisissez une couleur : 'bleu', 'vert' ou 'jaune'",
-                        savedColors[cellKey] || ""
-                    );
+                    const colorPicker = document.createElement("input");
+                    colorPicker.type = "color";
+                    colorPicker.style.position = "absolute";
+                    colorPicker.style.opacity = "0"; // Invisible
+                    document.body.appendChild(colorPicker);
 
-                    if (color === "bleu") {
-                        cell.style.backgroundColor = "#d6eaff"; // Bleu très clair
-                        savedColors[cellKey] = "#d6eaff";
-                    } else if (color === "vert") {
-                        cell.style.backgroundColor = "#d4edda"; // Vert clair
-                        savedColors[cellKey] = "#d4edda";
-                    } else if (color === "jaune") {
-                        cell.style.backgroundColor = "#fffacc"; // Jaune clair
-                        savedColors[cellKey] = "#fffacc";
-                    } else if (color === "") {
-                        cell.style.backgroundColor = "#fff"; // Efface la couleur
-                        delete savedColors[cellKey];
-                    }
+                    // Quand une couleur est choisie
+                    colorPicker.addEventListener("input", (event) => {
+                        const color = event.target.value;
+                        cell.style.backgroundColor = color;
+                        savedColors[cellKey] = color;
+                        saveState(`${storageKey}_${studentName}`, savedColors);
+                        document.body.removeChild(colorPicker); // Supprime le color picker
+                    });
 
-                    saveState(`${storageKey}_${studentName}`, savedColors);
+                    // Simuler un clic pour ouvrir le sélecteur
+                    colorPicker.click();
                 });
 
                 row.appendChild(cell);
@@ -66,9 +58,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             table.appendChild(row);
             tableContainer.appendChild(table);
+            container.appendChild(tableContainer);
         });
-
-        container.appendChild(tableContainer);
     }
 
     // Données des tableaux
