@@ -7,21 +7,62 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            text-align: center;
             margin: 20px;
         }
-        #student-list li {
-            margin: 5px 0;
+        h1 {
+            color: #333;
         }
-        button {
-            margin-left: 10px;
+        #container {
+            margin: auto;
+            max-width: 400px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 8px;
+            font-size: 14px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            background-color: #ff5555;
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #e04444;
+        }
+        .student-link {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .student-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <h1>Liste des élèves</h1>
+    <div id="container">
     <input type="text" id="student-name" placeholder="Entrez un nom d'élève">
     <button id="add-student">Ajouter</button>
     <ul id="student-list"></ul>
+    </div>
 
     <script>
         // IndexedDB functions
