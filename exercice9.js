@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Bandeau des images
     const imageBand = document.createElement("div");
     imageBand.style.display = "flex";
+    imageBand.style.justifyContent = "center";
     imageBand.style.gap = "20px";
     imageBand.style.marginBottom = "40px";
-    imageBand.style.justifyContent = "center";
 
     positions.forEach((pos) => {
         const img = document.createElement("img");
@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         img.style.width = "80px";
         img.style.height = "80px";
         img.style.cursor = "grab";
+        img.style.objectFit = "contain"; // S'assure que l'image s'adapte bien
         img.draggable = true;
 
         img.addEventListener("dragstart", (event) => {
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
         if (pos.row === null && pos.col === null) {
-            imageBand.appendChild(img); // Ajoute l'image au bandeau si elle n'est pas dans le tableau
+            imageBand.appendChild(img); // Ajoute les images au bandeau si elles ne sont pas dans le tableau
         }
     });
 
@@ -52,6 +53,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         td.style.height = "100px";
         td.style.border = "1px solid #ccc";
         td.style.position = "relative";
+        td.style.backgroundColor = "#f9f9f9"; // Couleur de fond légère
+        td.style.textAlign = "center"; // Centre les images dans la cellule
+        td.style.verticalAlign = "middle"; // Aligne les images verticalement
         td.dataset.row = 0;
         td.dataset.col = col;
 
@@ -136,3 +140,4 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 });
+
