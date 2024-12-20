@@ -1,8 +1,8 @@
 
 
 document.addEventListener("DOMContentLoaded", async function () {
-    const alphabetUpper = ["B", "A", "C", "D", "F", "E", "H", "G", "I", "J", "L", "K", "M", 
-                           "O", "N", "Q", "P", "S", "R", "T", "U", "V", "W", "X", "Y", "Z"];
+    const alphabetUpper = ["W", "N", "K", "Y", "E", "X", "C", "M", "I", "G", "S", "P", "J", 
+                           "T", "Z", "V", "L", "U", "F", "Q", "B", "O", "H", "D", "A", "R"];
     const alphabetLower = ["b", "a", "c", "d", "f", "e", "h", "g", "i", "j", "l", "k", "m", 
                            "o", "n", "q", "p", "s", "r", "t", "u", "v", "w", "x", "y", "z"];
     const alphabetCursif = ["b", "a", "c", "d", "f", "e", "h", "g", "i", "j", "l", "k", "m", 
