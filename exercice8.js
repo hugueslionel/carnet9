@@ -128,9 +128,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Données des tableaux
     const days = [
-        ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI", "DIMANCHE"],
-        ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"],
-        ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+        ["JEUDI", "MARDI", "DIMANCHE", "MARDI", "MERCREDI", "SAMEDI", "VENDREDI"],
+        ["lundi", "jeudi", "vendredi", "dimanche", "samedi", "mardi", "mercredi"],
+        ["mardi", "vendredi", "lundi", "Jeudi", "mecredi", "dimanche", "samedi"]
     ];
 
     // Polices des tableaux
