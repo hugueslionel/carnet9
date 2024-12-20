@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                            "T", "Z", "V", "L", "U", "F", "Q", "B", "O", "H", "D", "A", "R"];
     const alphabetLower = ["t", "l", "i", "f", "a", "e", "h", "k", "y", "z", "c", "o", "u", 
                            "v", "r", "b", "d", "n", "w", "m", "g", "q", "s", "j", "x", "p"];
-    const alphabetCursif = ["b", "a", "c", "d", "f", "e", "h", "g", "i", "j", "l", "k", "m", 
-                           "o", "n", "q", "p", "s", "r", "t", "u", "v", "w", "x", "y", "z"];
+    const alphabetCursif = ["b", "o", "a", "n", "c", "q", "d", "p", "f", "s", "e", "r", "h", 
+                           "t", "g", "u", "i", "v", "j", "w", "l", "x", "k", "y", "m", "z"];
     const numbers = Array.from({ length: 100 }, (_, i) => i + 1);
 
     const lireNombres = ["2","5","8","11","14","17","20","3","6","9","12","15","18","1","4","7","10","13","16","19"]
