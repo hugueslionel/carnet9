@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 cell.style.backgroundColor = "#fff";
                 delete savedStates[key];
             } else {
-                cell.style.backgroundColor = "#d4edda";
+                cell.style.backgroundColor = "#9ed6ac";
                 savedStates[key] = true;
             }
             saveState(`${storageKey}_${studentName}`, savedStates);
