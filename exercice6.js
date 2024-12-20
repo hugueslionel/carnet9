@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             box.style.border = "1px solid #ccc";
             box.style.margin = "0 auto";
             box.style.cursor = "pointer";
-            box.style.backgroundColor = savedStates[index] ? "#d4edda" : "#fff";
+            box.style.backgroundColor = savedStates[index] ? "9ed6ac" : "#fff";
 
             // Gestion du clic pour changer la couleur
             box.addEventListener("click", () => {
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     box.style.backgroundColor = "#fff";
                     delete savedStates[index];
                 } else {
-                    box.style.backgroundColor = "#d4edda";
+                    box.style.backgroundColor = "#9ed6ac";
                     savedStates[index] = true;
                 }
                 saveState(`${storageKey}_${studentName}`, savedStates);
