@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     td.style.textAlign = "center";
                     td.style.border = "2px solid #333";
                     td.style.cursor = "pointer";
-                    td.style.backgroundColor = savedStates[`${row}-${col}`] ? "#d4edda" : "#fff";
+                    td.style.backgroundColor = savedStates[`${row}-${col}`] ? "#9ed6ac" : "#fff";
 
                     td.addEventListener("click", () => {
                         toggleState(td, row, col);
