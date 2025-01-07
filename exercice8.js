@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         picker.style.zIndex = "1000";
 
         // Ajoute les trois pastilles de couleur
-        const colors = { bleu: "#1E7FCB", vert: "#16b84e", jaune: "#fcdc12" };
+        const colors = { bleu: "#1E7FCB", vert: "#16b84e", jaune: "#fcdc12", orange: "#ff7f00", rose: "#FFC0CB", violet: "#6A5ACD", marron: "#8B4513"};
 
         Object.keys(colors).forEach((colorName) => {
             const colorCircle = document.createElement("div");
