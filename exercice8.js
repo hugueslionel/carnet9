@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         picker.style.zIndex = "1000";
 
         // Ajoute les trois pastilles de couleur
-        const colors = { bleu: "#1E7FCB", vert: "#16b84e", jaune: "#fcdc12", orange: "#ff7f00", rose: "#FFC0CB", violet: "#6A5ACD", marron: "#8B4513"};
+        const colors = { bleu: "#9eb7ff", vert: "#91ffd8", jaune: "#ffffe0", orange: "#ffde8f", rose: "#ffcced", violet: "#a1a1ff", marron: "#b87200"};
 
         Object.keys(colors).forEach((colorName) => {
             const colorCircle = document.createElement("div");
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const days = [
         ["JEUDI", "LUNDI", "DIMANCHE", "MARDI", "MERCREDI", "SAMEDI", "VENDREDI"],
         ["lundi", "jeudi", "vendredi", "dimanche", "samedi", "mardi", "mercredi"],
-        ["mardi", "vendredi", "lundi", "jeudi", "mecredi", "dimanche", "samedi"]
+        ["mardi", "vendredi", "lundi", "jeudi", "mercredi", "dimanche", "samedi"]
     ];
 
     // Polices des tableaux
