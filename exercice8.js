@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             table.style.borderCollapse = "collapse";
             table.style.margin = "0 auto";
             table.style.fontFamily = fonts[tableIndex];
+            table.style.fontSize = "32px";
 
             const row = document.createElement("tr");
 
