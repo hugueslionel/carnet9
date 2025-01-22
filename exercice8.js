@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const cellKey = `${tableIndex}_${cellIndex}`;
 
                 // Style des cellules
-                cell.style.width = "100px";
-                cell.style.height = "50px";
+                cell.style.width = "150px";
+                cell.style.height = "80px";
                 cell.style.border = "1px solid #ccc";
                 cell.style.textAlign = "center";
                 cell.style.verticalAlign = "middle";
