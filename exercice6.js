@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             box.style.border = "1px solid #ccc";
             box.style.margin = "0 auto";
             box.style.cursor = "pointer";
-            box.style.backgroundColor = savedStates[index] ? "9ed6ac" : "#fff";
+            box.style.backgroundColor = savedStates[index] ? "#9ed6ac" : "#fff";
 
             // Gestion du clic pour changer la couleur
             box.addEventListener("click", () => {
