@@ -1,17 +1,21 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
-    const storageKey = `exercice11_${studentName}`;
+    const storageKey = `exercice10_${studentName}`;
 
     // Images disponibles dans le tableau
     const images = [
-        { id: "image1", src: "images2/image1.jpg" },
-        { id: "image2", src: "images2/image2.jpg" },
-        { id: "image3", src: "images2/image3.jpg" },
-        { id: "image4", src: "images2/image4.jpg" },
-        { id: "image5", src: "images2/image5.jpg" },
-        { id: "image6", src: "images2/image6.jpg" },
-        { id: "image7", src: "images2/image7.jpg" },
-        { id: "image8", src: "images2/image8.jpg" }
+        { id: "image1", src: "images2/im1.jpeg" },
+        { id: "image2", src: "images2/im2.jpeg" },
+        { id: "image3", src: "images2/im3.jpeg" },
+        { id: "image4", src: "images2/im4.jpeg" },
+        { id: "image5", src: "images2/im5.jpeg" },
+        { id: "image6", src: "images2/im6.jpeg" },
+        { id: "image7", src: "images2/im7.jpeg" },
+        { id: "image8", src: "images2/im8.jpeg" },
+        { id: "image9", src: "images2/im9.jpeg" },
+        { id: "image10", src: "images2/im10.jpeg" },
+        { id: "image11", src: "images2/im11.jpeg" },
+        { id: "image12", src: "images2/im12.jpeg" }
     ];
 
     const container = document.getElementById("imageTable");
