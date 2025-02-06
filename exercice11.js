@@ -3,30 +3,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     const storageKey = `exercice11_${studentName}`;
 
     // Images disponibles dans le tableau
-    const images = [
-        { id: "image1", src: "images2/im1.jpeg" },
-        { id: "image2", src: "images2/im2.jpeg" },
-        { id: "image3", src: "images2/im3.jpeg" },
-        { id: "image4", src: "images2/im4.jpeg" },
-        { id: "image5", src: "images2/im5.jpeg" },
-        { id: "image6", src: "images2/im6.jpeg" },
-        { id: "image7", src: "images2/im7.jpeg" },
-        { id: "image8", src: "images2/im8.jpeg" },
-        { id: "image9", src: "images2/im9.jpeg" },
-        { id: "image10", src: "images2/im10.jpeg" },
-        { id: "image11", src: "images2/im11.jpeg" },
-        { id: "image12", src: "images2/im12.jpeg" }
-    ];
+    const images = Array.from({ length: 12 }, (_, index) => ({
+        id: `image${index + 1}`,
+        src: `images2/im${index + 1}.jpeg`
+    }));
 
-    const container = document.createElement("div");
+    const container = document.getElementById("exercise11");
     const imageContainer = document.createElement("div");
-    container.id = "imageTable";
-    imageContainer.id = "imageContainer";
+    const confirmButton = document.createElement("button");
 
-    exerciseContainer.appendChild(container);
-    exerciseContainer.appendChild(imageContainer);
-
-    const confirmButton = document.getElementById("confirmSelectionButton");
+    // Configuration du bouton de confirmation
+    confirmButton.textContent = "Confirmer la sélection";
+    confirmButton.style.display = "none";
+    confirmButton.style.marginTop = "10px";
+    container.appendChild(confirmButton);
 
     // Bouton discret pour afficher le tableau
     const showTableButton = document.createElement("button");
@@ -43,17 +33,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.body.appendChild(showTableButton);
 
     showTableButton.addEventListener("click", function () {
-        container.style.display = "grid";
+        imageContainer.style.display = "grid";
         confirmButton.style.display = "block";
     });
+
+    imageContainer.style.display = "none";
+    imageContainer.style.gridTemplateColumns = "repeat(4, 1fr)";
+    imageContainer.style.gap = "10px";
+    container.appendChild(imageContainer);
 
     // Charger les images préalablement sélectionnées
     const savedSelection = await loadState(storageKey);
     if (savedSelection && savedSelection.length) {
         displaySelectedImages(savedSelection);
     } else {
-        container.style.display = "none";
-        confirmButton.style.display = "none";
         displayImageTable(images);
     }
 
@@ -67,10 +60,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             imgElement.style.height = "100px";
             imgElement.style.margin = "10px";
             imgElement.style.cursor = "pointer";
+            imgElement.style.objectFit = "contain";
             imgElement.addEventListener("click", function () {
                 imgElement.classList.toggle("selected");
             });
-            container.appendChild(imgElement);
+            imageContainer.appendChild(imgElement);
         });
 
         confirmButton.addEventListener("click", function () {
@@ -78,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 .map(img => ({ id: img.id, src: img.src }));
 
             saveState(storageKey, selectedImages);
-            container.style.display = "none";
+            imageContainer.style.display = "none";
             confirmButton.style.display = "none";
             displaySelectedImages(selectedImages);
         });
@@ -93,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             imgElement.style.height = "100px";
             imgElement.style.margin = "10px";
             imgElement.style.objectFit = "contain";
-            imageContainer.appendChild(imgElement);
+            container.appendChild(imgElement);
         });
     }
 
