@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
-    const storageKey = `exercice10_${studentName}`;
+    const storageKey = `exercice11_${studentName}`;
 
     // Images disponibles dans le tableau
     const images = [
