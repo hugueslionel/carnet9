@@ -18,19 +18,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     confirmButton.style.marginTop = "10px";
     container.appendChild(confirmButton);
 
-    // Bouton discret pour afficher le tableau
+    // Bouton attaché à la section
     const showTableButton = document.createElement("button");
     showTableButton.textContent = "Sélectionner des images";
-    showTableButton.style.position = "fixed";
-    showTableButton.style.top = "10px";
-    showTableButton.style.right = "10px";
-    showTableButton.style.backgroundColor = "#007bff";
-    showTableButton.style.color = "white";
-    showTableButton.style.border = "none";
-    showTableButton.style.padding = "8px 12px";
-    showTableButton.style.borderRadius = "5px";
-    showTableButton.style.cursor = "pointer";
-    document.body.appendChild(showTableButton);
+    showTableButton.style.display = "block";
+    showTableButton.style.marginBottom = "10px";
+    container.appendChild(showTableButton);
 
     showTableButton.addEventListener("click", function () {
         imageContainer.style.display = "grid";
@@ -39,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     imageContainer.style.display = "none";
     imageContainer.style.gridTemplateColumns = "repeat(4, 1fr)";
-    imageContainer.style.gap = "10px";
+    imageContainer.style.gap = "15px";
     container.appendChild(imageContainer);
 
     // Charger les images préalablement sélectionnées
@@ -56,14 +49,20 @@ document.addEventListener("DOMContentLoaded", async function () {
             const imgElement = document.createElement("img");
             imgElement.src = image.src;
             imgElement.id = image.id;
-            imgElement.style.width = "100px";
-            imgElement.style.height = "100px";
+            imgElement.style.width = "150px";
+            imgElement.style.height = "150px";
             imgElement.style.margin = "10px";
             imgElement.style.cursor = "pointer";
             imgElement.style.objectFit = "contain";
+            imgElement.style.border = "2px solid transparent";
+
             imgElement.addEventListener("click", function () {
                 imgElement.classList.toggle("selected");
+                imgElement.style.border = imgElement.classList.contains("selected")
+                    ? "2px solid #007bff"
+                    : "2px solid transparent";
             });
+
             imageContainer.appendChild(imgElement);
         });
 
@@ -74,6 +73,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             saveState(storageKey, selectedImages);
             imageContainer.style.display = "none";
             confirmButton.style.display = "none";
+            showTableButton.style.display = "none";
             displaySelectedImages(selectedImages);
         });
     }
@@ -83,10 +83,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         selectedImages.forEach((image) => {
             const imgElement = document.createElement("img");
             imgElement.src = image.src;
-            imgElement.style.width = "100px";
-            imgElement.style.height = "100px";
+            imgElement.style.width = "200px";
+            imgElement.style.height = "200px";
             imgElement.style.margin = "10px";
             imgElement.style.objectFit = "contain";
+            imgElement.style.border = "none";
             container.appendChild(imgElement);
         });
     }
@@ -149,3 +150,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
     document.head.appendChild(style);
 });
+
