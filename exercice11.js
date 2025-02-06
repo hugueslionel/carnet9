@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     showTableButton.addEventListener("click", function () {
         imageContainer.style.display = "grid";
         confirmButton.style.display = "block";
+        loadImages(); // Charger les images dynamiquement
     });
 
     imageContainer.style.display = "none";
@@ -39,12 +40,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     const savedSelection = await loadState(storageKey);
     if (savedSelection && savedSelection.length) {
         displaySelectedImages(savedSelection);
-    } else {
-        displayImageTable(images);
     }
 
-    // Affiche le tableau des images
-    function displayImageTable(images) {
+    // Fonction pour charger et afficher les images
+    function loadImages() {
+        imageContainer.innerHTML = ""; // Nettoyer le conteneur
         images.forEach((image) => {
             const imgElement = document.createElement("img");
             imgElement.src = image.src;
@@ -65,21 +65,22 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             imageContainer.appendChild(imgElement);
         });
-
-        confirmButton.addEventListener("click", function () {
-            const selectedImages = Array.from(document.querySelectorAll(".selected"))
-                .map(img => ({ id: img.id, src: img.src }));
-
-            saveState(storageKey, selectedImages);
-            imageContainer.style.display = "none";
-            confirmButton.style.display = "none";
-            showTableButton.style.display = "none";
-            displaySelectedImages(selectedImages);
-        });
     }
+
+    confirmButton.addEventListener("click", function () {
+        const selectedImages = Array.from(document.querySelectorAll(".selected"))
+            .map(img => ({ id: img.id, src: img.src }));
+
+        saveState(storageKey, selectedImages);
+        imageContainer.style.display = "none";
+        confirmButton.style.display = "none";
+        showTableButton.style.display = "none";
+        displaySelectedImages(selectedImages);
+    });
 
     // Affiche les images sélectionnées
     function displaySelectedImages(selectedImages) {
+        container.innerHTML = "";
         selectedImages.forEach((image) => {
             const imgElement = document.createElement("img");
             imgElement.src = image.src;
