@@ -18,8 +18,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         { id: "image12", src: "images2/im12.jpeg" }
     ];
 
-    const container = document.getElementById("imageTable");
-    const imageContainer = document.getElementById("imageContainer");
+    const container = document.createElement("div");
+    const imageContainer = document.createElement("div");
+    container.id = "imageTable";
+    imageContainer.id = "imageContainer";
+
+    exerciseContainer.appendChild(container);
+    exerciseContainer.appendChild(imageContainer);
+
     const confirmButton = document.getElementById("confirmSelectionButton");
 
     // Bouton discret pour afficher le tableau
