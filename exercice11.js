@@ -22,11 +22,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const confirmButton = document.createElement("button");
     confirmButton.textContent = "Confirmer la sélection";
-    confirmButton.style.display = "none";
 
     const finishButton = document.createElement("button");
     finishButton.textContent = "Terminé";
-    finishButton.style.display = "none";
 
     buttonContainer.appendChild(showTableButton);
     buttonContainer.appendChild(confirmButton);
@@ -47,8 +45,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Afficher le tableau d'images
     showTableButton.addEventListener("click", function () {
         imageContainer.style.display = "grid";
-        confirmButton.style.display = "block";
-        finishButton.style.display = "block";
         loadImages();
     });
 
@@ -83,6 +79,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const selectedImages = Array.from(document.querySelectorAll(".selected"))
             .map(img => ({ id: img.id, src: img.src }));
 
+        displaySelectedImages(selectedImages);
         saveState(storageKey, selectedImages);
     });
 
@@ -166,4 +163,3 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
     document.head.appendChild(style);
 });
-
