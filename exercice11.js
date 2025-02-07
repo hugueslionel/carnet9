@@ -10,31 +10,33 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const container = document.getElementById("exercise11");
     const imageContainer = document.createElement("div");
-    const confirmButton = document.createElement("button");
 
-    // Configuration du bouton de confirmation
-    confirmButton.textContent = "Confirmer la sélection";
-    confirmButton.style.display = "none";
-    confirmButton.style.marginTop = "10px";
-    container.appendChild(confirmButton);
+    // Création des boutons
+    const buttonContainer = document.createElement("div");
+    buttonContainer.style.display = "flex";
+    buttonContainer.style.gap = "10px";
+    buttonContainer.style.marginBottom = "15px";
 
-    // Bouton attaché à la section
     const showTableButton = document.createElement("button");
     showTableButton.textContent = "Sélectionner des images";
-    showTableButton.style.display = "block";
-    showTableButton.style.marginBottom = "10px";
-    container.appendChild(showTableButton);
 
-    showTableButton.addEventListener("click", function () {
-        imageContainer.style.display = "grid";
-        confirmButton.style.display = "block";
-        loadImages(); // Charger les images dynamiquement
-    });
+    const confirmButton = document.createElement("button");
+    confirmButton.textContent = "Confirmer la sélection";
+    confirmButton.style.display = "none";
+
+    const finishButton = document.createElement("button");
+    finishButton.textContent = "Terminé";
+    finishButton.style.display = "none";
+
+    buttonContainer.appendChild(showTableButton);
+    buttonContainer.appendChild(confirmButton);
+    buttonContainer.appendChild(finishButton);
+    container.appendChild(buttonContainer);
+    container.appendChild(imageContainer);
 
     imageContainer.style.display = "none";
     imageContainer.style.gridTemplateColumns = "repeat(4, 1fr)";
     imageContainer.style.gap = "15px";
-    container.appendChild(imageContainer);
 
     // Charger les images préalablement sélectionnées
     const savedSelection = await loadState(storageKey);
@@ -42,54 +44,67 @@ document.addEventListener("DOMContentLoaded", async function () {
         displaySelectedImages(savedSelection);
     }
 
+    // Afficher le tableau d'images
+    showTableButton.addEventListener("click", function () {
+        imageContainer.style.display = "grid";
+        confirmButton.style.display = "block";
+        finishButton.style.display = "block";
+        loadImages();
+    });
+
     // Fonction pour charger et afficher les images
     function loadImages() {
-        imageContainer.innerHTML = ""; // Nettoyer le conteneur
         images.forEach((image) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = image.src;
-            imgElement.id = image.id;
-            imgElement.style.width = "150px";
-            imgElement.style.height = "150px";
-            imgElement.style.margin = "10px";
-            imgElement.style.cursor = "pointer";
-            imgElement.style.objectFit = "contain";
-            imgElement.style.border = "2px solid transparent";
+            if (!document.getElementById(image.id)) { // Éviter les doublons
+                const imgElement = document.createElement("img");
+                imgElement.src = image.src;
+                imgElement.id = image.id;
+                imgElement.style.width = "150px";
+                imgElement.style.height = "150px";
+                imgElement.style.margin = "10px";
+                imgElement.style.cursor = "pointer";
+                imgElement.style.objectFit = "contain";
+                imgElement.style.border = "2px solid transparent";
 
-            imgElement.addEventListener("click", function () {
-                imgElement.classList.toggle("selected");
-                imgElement.style.border = imgElement.classList.contains("selected")
-                    ? "2px solid #007bff"
-                    : "2px solid transparent";
-            });
+                imgElement.addEventListener("click", function () {
+                    imgElement.classList.toggle("selected");
+                    imgElement.style.border = imgElement.classList.contains("selected")
+                        ? "2px solid #007bff"
+                        : "2px solid transparent";
+                });
 
-            imageContainer.appendChild(imgElement);
+                imageContainer.appendChild(imgElement);
+            }
         });
     }
 
+    // Confirmation de la sélection
     confirmButton.addEventListener("click", function () {
         const selectedImages = Array.from(document.querySelectorAll(".selected"))
             .map(img => ({ id: img.id, src: img.src }));
 
         saveState(storageKey, selectedImages);
+    });
+
+    // Terminer et masquer les boutons
+    finishButton.addEventListener("click", function () {
+        buttonContainer.style.display = "none";
         imageContainer.style.display = "none";
-        confirmButton.style.display = "none";
-        showTableButton.style.display = "none";
-        displaySelectedImages(selectedImages);
     });
 
     // Affiche les images sélectionnées
     function displaySelectedImages(selectedImages) {
-        container.innerHTML = "";
         selectedImages.forEach((image) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = image.src;
-            imgElement.style.width = "200px";
-            imgElement.style.height = "200px";
-            imgElement.style.margin = "10px";
-            imgElement.style.objectFit = "contain";
-            imgElement.style.border = "none";
-            container.appendChild(imgElement);
+            if (!document.getElementById(image.id)) { // Éviter les doublons
+                const imgElement = document.createElement("img");
+                imgElement.src = image.src;
+                imgElement.style.width = "200px";
+                imgElement.style.height = "200px";
+                imgElement.style.margin = "10px";
+                imgElement.style.objectFit = "contain";
+                imgElement.style.border = "none";
+                container.appendChild(imgElement);
+            }
         });
     }
 
