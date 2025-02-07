@@ -50,26 +50,27 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Fonction pour charger et afficher les images
     function loadImages() {
-        imageContainer.innerHTML = ""; // Nettoyage du conteneur
         images.forEach((image) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = image.src;
-            imgElement.id = image.id;
-            imgElement.style.width = "150px";
-            imgElement.style.height = "150px";
-            imgElement.style.margin = "10px";
-            imgElement.style.cursor = "pointer";
-            imgElement.style.objectFit = "contain";
-            imgElement.style.border = "2px solid transparent";
+            if (!document.getElementById(image.id)) { // Éviter les doublons
+                const imgElement = document.createElement("img");
+                imgElement.src = image.src;
+                imgElement.id = image.id;
+                imgElement.style.width = "150px";
+                imgElement.style.height = "150px";
+                imgElement.style.margin = "10px";
+                imgElement.style.cursor = "pointer";
+                imgElement.style.objectFit = "contain";
+                imgElement.style.border = "2px solid transparent";
 
-            imgElement.addEventListener("click", function () {
-                imgElement.classList.toggle("selected");
-                imgElement.style.border = imgElement.classList.contains("selected")
-                    ? "2px solid #007bff"
-                    : "2px solid transparent";
-            });
+                imgElement.addEventListener("click", function () {
+                    imgElement.classList.toggle("selected");
+                    imgElement.style.border = imgElement.classList.contains("selected")
+                        ? "2px solid #007bff"
+                        : "2px solid transparent";
+                });
 
-            imageContainer.appendChild(imgElement);
+                imageContainer.appendChild(imgElement);
+            }
         });
     }
 
@@ -78,31 +79,31 @@ document.addEventListener("DOMContentLoaded", async function () {
         const selectedImages = Array.from(document.querySelectorAll(".selected"))
             .map(img => ({ id: img.id, src: img.src }));
 
-        displaySelectedImages(selectedImages);
+        appendSelectedImages(selectedImages);
         saveState(storageKey, selectedImages);
     });
+
+    // Affiche les images sélectionnées sous les boutons
+    function appendSelectedImages(selectedImages) {
+        selectedImages.forEach((image) => {
+            if (!document.querySelector(`img[src='${image.src}']`)) { // Éviter les doublons visuels
+                const imgElement = document.createElement("img");
+                imgElement.src = image.src;
+                imgElement.style.width = "200px";
+                imgElement.style.height = "200px";
+                imgElement.style.margin = "10px";
+                imgElement.style.objectFit = "contain";
+                imgElement.style.border = "none";
+                container.appendChild(imgElement);
+            }
+        });
+    }
 
     // Terminer et masquer les boutons
     finishButton.addEventListener("click", function () {
         buttonContainer.style.display = "none";
         imageContainer.style.display = "none";
     });
-
-    // Affiche les images sélectionnées
-    function displaySelectedImages(selectedImages) {
-        container.innerHTML = ""; // Nettoyage pour éviter les doublons
-        container.appendChild(buttonContainer);
-        selectedImages.forEach((image) => {
-            const imgElement = document.createElement("img");
-            imgElement.src = image.src;
-            imgElement.style.width = "200px";
-            imgElement.style.height = "200px";
-            imgElement.style.margin = "10px";
-            imgElement.style.objectFit = "contain";
-            imgElement.style.border = "none";
-            container.appendChild(imgElement);
-        });
-    }
 
     // Sauvegarde dans IndexedDB
     function saveState(key, data) {
@@ -162,3 +163,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
     document.head.appendChild(style);
 });
+
