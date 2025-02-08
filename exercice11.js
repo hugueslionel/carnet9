@@ -1,7 +1,7 @@
-
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
     const storageKey = `exercice11_${studentName}`;
+    const visibilityKey = `visibility_${studentName}`;
 
     // Images disponibles dans le tableau
     const images = Array.from({ length: 12 }, (_, index) => ({
@@ -120,12 +120,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Sauvegarder la visibilité de l'interface
     function saveVisibilityState(visible) {
-        localStorage.setItem("imageContainerVisible", JSON.stringify(visible));
+        localStorage.setItem(visibilityKey, JSON.stringify(visible));
     }
 
     // Restaurer la visibilité de l'interface
     function restoreVisibilityState() {
-        const visible = JSON.parse(localStorage.getItem("imageContainerVisible"));
+        const visible = JSON.parse(localStorage.getItem(visibilityKey));
         if (visible === false) {
             buttonContainer.style.display = "none";
             imageContainer.style.display = "none";
