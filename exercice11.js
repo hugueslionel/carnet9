@@ -35,12 +35,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Charger les images préalablement sélectionnées
     const savedSelection = await loadState(storageKey);
+    const interfaceVisible = restoreVisibilityState();
+
     if (savedSelection && savedSelection.length) {
         displaySelectedImages(savedSelection);
     }
 
-    // Charger et afficher les images disponibles
-    loadImages();
+    // Charger et afficher les images disponibles si l'interface est visible
+    if (interfaceVisible) {
+        loadImages();
+    }
 
     function loadImages() {
         imageContainer.innerHTML = ""; // Nettoyage du conteneur
@@ -129,7 +133,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (visible === false) {
             buttonContainer.style.display = "none";
             imageContainer.style.display = "none";
+            return false;
         }
+        return true;
     }
 
     // Chargement depuis IndexedDB
@@ -162,9 +168,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             request.onerror = (event) => reject("Erreur d'ouverture de la base IndexedDB.");
         });
     }
-
-    // Restaurer la visibilité au chargement
-    restoreVisibilityState();
 
     // Styles pour l'impression
     const style = document.createElement("style");
