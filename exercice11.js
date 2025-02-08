@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const storageKey = "exercice11_selectedImages";
+    const studentName = new URLSearchParams(window.location.search).get("name");
+    const storageKey = `exercice11_selectedImages_${studentName}`;
 
     // Images disponibles dans le tableau
     const images = Array.from({ length: 12 }, (_, index) => ({
@@ -157,6 +158,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
     document.head.appendChild(style);
 });
-
-
 
