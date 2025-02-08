@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const studentName = new URLSearchParams(window.location.search).get("name");
-    const storageKey = `exercice11_${studentName}`;
-    const visibilityKey = `visibility_${studentName}`;
+    const storageKey = "exercice11_selectedImages";
 
     // Images disponibles dans le tableau
     const images = Array.from({ length: 12 }, (_, index) => ({
@@ -10,45 +8,33 @@ document.addEventListener("DOMContentLoaded", async function () {
     }));
 
     const container = document.getElementById("exercise11");
+
+    // Bouton pour afficher le tableau d'images
+    const showTableButton = document.createElement("button");
+    showTableButton.textContent = "Sélectionner des images";
+    showTableButton.style.marginBottom = "15px";
+    container.appendChild(showTableButton);
+
     const imageContainer = document.createElement("div");
-
-    // Création des boutons
-    const buttonContainer = document.createElement("div");
-    buttonContainer.style.display = "flex";
-    buttonContainer.style.gap = "10px";
-    buttonContainer.style.marginBottom = "15px";
-
-    const confirmButton = document.createElement("button");
-    confirmButton.textContent = "Confirmer la sélection";
-
-    const finishButton = document.createElement("button");
-    finishButton.textContent = "Terminé";
-
-    buttonContainer.appendChild(confirmButton);
-    buttonContainer.appendChild(finishButton);
-    container.appendChild(buttonContainer);
-    container.appendChild(imageContainer);
-
-    imageContainer.style.display = "grid";
+    imageContainer.style.display = "none";
     imageContainer.style.gridTemplateColumns = "repeat(4, 1fr)";
     imageContainer.style.gap = "15px";
+    imageContainer.style.marginTop = "10px";
+    container.appendChild(imageContainer);
 
-    // Charger les images préalablement sélectionnées
+    // Charger les images sélectionnées
     const savedSelection = await loadState(storageKey);
-    const interfaceVisible = restoreVisibilityState();
-
-    // Afficher les images sélectionnées même si l'interface est masquée
     if (savedSelection && savedSelection.length) {
         displaySelectedImages(savedSelection);
     }
 
-    // Charger et afficher les images disponibles si l'interface est visible
-    if (interfaceVisible) {
+    showTableButton.addEventListener("click", function () {
+        imageContainer.style.display = "grid";
         loadImages();
-    }
+    });
 
     function loadImages() {
-        imageContainer.innerHTML = ""; // Nettoyage du conteneur
+        imageContainer.innerHTML = ""; // Nettoyer le conteneur
         images.forEach((image) => {
             const imgElement = document.createElement("img");
             imgElement.src = image.src;
@@ -60,54 +46,49 @@ document.addEventListener("DOMContentLoaded", async function () {
             imgElement.style.objectFit = "contain";
             imgElement.style.border = "2px solid transparent";
 
-            // Marquer les images déjà sélectionnées après rechargement
-            if (savedSelection && savedSelection.some(img => img.src === image.src)) {
-                imgElement.classList.add("selected");
-                imgElement.style.border = "2px solid #007bff";
-            }
-
             imgElement.addEventListener("click", function () {
                 imgElement.classList.toggle("selected");
                 imgElement.style.border = imgElement.classList.contains("selected")
                     ? "2px solid #007bff"
                     : "2px solid transparent";
+
+                if (imgElement.classList.contains("selected")) {
+                    placeImageOnPage({ id: imgElement.id, src: imgElement.src });
+                    saveImage({ id: imgElement.id, src: imgElement.src });
+                }
             });
 
             imageContainer.appendChild(imgElement);
         });
     }
 
-    // Confirmation de la sélection
-    confirmButton.addEventListener("click", function () {
-        const selectedImages = Array.from(document.querySelectorAll(".selected"))
-            .map(img => ({ id: img.id, src: img.src }));
+    function placeImageOnPage(image) {
+        if (!document.querySelector(`img[src='${image.src}']`)) {
+            const imgElement = document.createElement("img");
+            imgElement.src = image.src;
+            imgElement.style.width = "200px";
+            imgElement.style.height = "200px";
+            imgElement.style.margin = "10px";
+            imgElement.style.objectFit = "contain";
+            imgElement.style.border = "none";
+            container.appendChild(imgElement);
+        }
+    }
 
-        appendSelectedImages(selectedImages);
-        saveState(storageKey, selectedImages);
-    });
-
-    // Affiche les images sélectionnées sous les boutons
-    function appendSelectedImages(selectedImages) {
-        selectedImages.forEach((image) => {
-            if (!document.querySelector(`img[src='${image.src}']`)) { // Éviter les doublons visuels
-                const imgElement = document.createElement("img");
-                imgElement.src = image.src;
-                imgElement.style.width = "200px";
-                imgElement.style.height = "200px";
-                imgElement.style.margin = "10px";
-                imgElement.style.objectFit = "contain";
-                imgElement.style.border = "none";
-                container.appendChild(imgElement);
+    function saveImage(image) {
+        loadState(storageKey).then((currentSelection) => {
+            const updatedSelection = currentSelection || [];
+            if (!updatedSelection.find(img => img.src === image.src)) {
+                updatedSelection.push(image);
+                saveState(storageKey, updatedSelection);
             }
         });
     }
 
-    // Terminer et masquer les boutons
-    finishButton.addEventListener("click", function () {
-        buttonContainer.style.display = "none";
-        imageContainer.style.display = "none";
-        saveVisibilityState(false); // Sauvegarde de l'état de visibilité
-    });
+    // Affiche les images sélectionnées au chargement
+    function displaySelectedImages(selectedImages) {
+        selectedImages.forEach(placeImageOnPage);
+    }
 
     // Sauvegarde dans IndexedDB
     function saveState(key, data) {
@@ -121,22 +102,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 request.onerror = reject;
             });
         });
-    }
-
-    // Sauvegarder la visibilité de l'interface
-    function saveVisibilityState(visible) {
-        localStorage.setItem(visibilityKey, JSON.stringify(visible));
-    }
-
-    // Restaurer la visibilité de l'interface
-    function restoreVisibilityState() {
-        const visible = JSON.parse(localStorage.getItem(visibilityKey));
-        if (visible === false) {
-            buttonContainer.style.display = "none";
-            imageContainer.style.display = "none";
-            return false;
-        }
-        return true;
     }
 
     // Chargement depuis IndexedDB
@@ -183,3 +148,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
     document.head.appendChild(style);
 });
+
