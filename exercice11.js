@@ -17,22 +17,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     buttonContainer.style.gap = "10px";
     buttonContainer.style.marginBottom = "15px";
 
-    const showTableButton = document.createElement("button");
-    showTableButton.textContent = "Sélectionner des images";
-
     const confirmButton = document.createElement("button");
     confirmButton.textContent = "Confirmer la sélection";
 
     const finishButton = document.createElement("button");
     finishButton.textContent = "Terminé";
 
-    buttonContainer.appendChild(showTableButton);
     buttonContainer.appendChild(confirmButton);
     buttonContainer.appendChild(finishButton);
     container.appendChild(buttonContainer);
     container.appendChild(imageContainer);
 
-    imageContainer.style.display = "none";
+    imageContainer.style.display = "grid";
     imageContainer.style.gridTemplateColumns = "repeat(4, 1fr)";
     imageContainer.style.gap = "15px";
 
@@ -42,35 +38,30 @@ document.addEventListener("DOMContentLoaded", async function () {
         displaySelectedImages(savedSelection);
     }
 
-    // Afficher le tableau d'images
-    showTableButton.addEventListener("click", function () {
-        imageContainer.style.display = "grid";
-        loadImages();
-    });
+    // Charger et afficher les images disponibles
+    loadImages();
 
-    // Fonction pour charger et afficher les images
     function loadImages() {
+        imageContainer.innerHTML = ""; // Nettoyage du conteneur
         images.forEach((image) => {
-            if (!document.getElementById(image.id)) { // Éviter les doublons
-                const imgElement = document.createElement("img");
-                imgElement.src = image.src;
-                imgElement.id = image.id;
-                imgElement.style.width = "150px";
-                imgElement.style.height = "150px";
-                imgElement.style.margin = "10px";
-                imgElement.style.cursor = "pointer";
-                imgElement.style.objectFit = "contain";
-                imgElement.style.border = "2px solid transparent";
+            const imgElement = document.createElement("img");
+            imgElement.src = image.src;
+            imgElement.id = image.id;
+            imgElement.style.width = "150px";
+            imgElement.style.height = "150px";
+            imgElement.style.margin = "10px";
+            imgElement.style.cursor = "pointer";
+            imgElement.style.objectFit = "contain";
+            imgElement.style.border = "2px solid transparent";
 
-                imgElement.addEventListener("click", function () {
-                    imgElement.classList.toggle("selected");
-                    imgElement.style.border = imgElement.classList.contains("selected")
-                        ? "2px solid #007bff"
-                        : "2px solid transparent";
-                });
+            imgElement.addEventListener("click", function () {
+                imgElement.classList.toggle("selected");
+                imgElement.style.border = imgElement.classList.contains("selected")
+                    ? "2px solid #007bff"
+                    : "2px solid transparent";
+            });
 
-                imageContainer.appendChild(imgElement);
-            }
+            imageContainer.appendChild(imgElement);
         });
     }
 
@@ -163,4 +154,3 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
     document.head.appendChild(style);
 });
-
