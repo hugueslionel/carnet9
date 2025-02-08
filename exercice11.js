@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const savedSelection = await loadState(storageKey);
     const interfaceVisible = restoreVisibilityState();
 
+    // Afficher les images sélectionnées même si l'interface est masquée
     if (savedSelection && savedSelection.length) {
         displaySelectedImages(savedSelection);
     }
