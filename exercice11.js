@@ -13,14 +13,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Bouton pour afficher le tableau d'images
     const showTableButton = document.createElement("button");
     showTableButton.textContent = "+";
-    showTableButton.style.width = "40px";
-    showTableButton.style.height = "40px";
+    showTableButton.style.width = "30px";
+    showTableButton.style.height = "30px";
     showTableButton.style.borderRadius = "50%";
     showTableButton.style.backgroundColor = "lightgray";
     showTableButton.style.border = "none";
     showTableButton.style.position = "absolute";
-    showTableButton.style.top = "10px";
-    showTableButton.style.left = "10px";
+    showTableButton.style.top = "2px";
+    showTableButton.style.left = "2px";
     showTableButton.style.cursor = "pointer";
     container.appendChild(showTableButton);
 
