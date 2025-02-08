@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
     const storageKey = `exercice11_${studentName}`;
@@ -54,6 +55,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             imgElement.style.objectFit = "contain";
             imgElement.style.border = "2px solid transparent";
 
+            // Marquer les images déjà sélectionnées après rechargement
+            if (savedSelection && savedSelection.some(img => img.src === image.src)) {
+                imgElement.classList.add("selected");
+                imgElement.style.border = "2px solid #007bff";
+            }
+
             imgElement.addEventListener("click", function () {
                 imgElement.classList.toggle("selected");
                 imgElement.style.border = imgElement.classList.contains("selected")
@@ -94,6 +101,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     finishButton.addEventListener("click", function () {
         buttonContainer.style.display = "none";
         imageContainer.style.display = "none";
+        saveVisibilityState(false); // Sauvegarde de l'état de visibilité
     });
 
     // Sauvegarde dans IndexedDB
@@ -108,6 +116,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                 request.onerror = reject;
             });
         });
+    }
+
+    // Sauvegarder la visibilité de l'interface
+    function saveVisibilityState(visible) {
+        localStorage.setItem("imageContainerVisible", JSON.stringify(visible));
+    }
+
+    // Restaurer la visibilité de l'interface
+    function restoreVisibilityState() {
+        const visible = JSON.parse(localStorage.getItem("imageContainerVisible"));
+        if (visible === false) {
+            buttonContainer.style.display = "none";
+            imageContainer.style.display = "none";
+        }
     }
 
     // Chargement depuis IndexedDB
@@ -140,6 +162,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             request.onerror = (event) => reject("Erreur d'ouverture de la base IndexedDB.");
         });
     }
+
+    // Restaurer la visibilité au chargement
+    restoreVisibilityState();
 
     // Styles pour l'impression
     const style = document.createElement("style");
