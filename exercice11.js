@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }));
 
     const container = document.getElementById("exercise11");
+    container.style.position = "relative"; // Position relative pour maintenir les éléments fixes dans la section
 
     // Bouton pour afficher le tableau d'images
     const showTableButton = document.createElement("button");
@@ -156,5 +157,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
     document.head.appendChild(style);
 });
+
 
 
