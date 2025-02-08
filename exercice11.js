@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     showTableButton.style.borderRadius = "50%";
     showTableButton.style.backgroundColor = "lightgray";
     showTableButton.style.border = "none";
-    showTableButton.style.position = "fixed";
+    showTableButton.style.position = "absolute";
     showTableButton.style.top = "10px";
     showTableButton.style.left = "10px";
     showTableButton.style.cursor = "pointer";
