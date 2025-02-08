@@ -11,8 +11,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Bouton pour afficher le tableau d'images
     const showTableButton = document.createElement("button");
-    showTableButton.textContent = "Sélectionner des images";
-    showTableButton.style.marginBottom = "15px";
+    showTableButton.textContent = "+";
+    showTableButton.style.width = "40px";
+    showTableButton.style.height = "40px";
+    showTableButton.style.borderRadius = "50%";
+    showTableButton.style.backgroundColor = "lightgray";
+    showTableButton.style.border = "none";
+    showTableButton.style.position = "fixed";
+    showTableButton.style.top = "10px";
+    showTableButton.style.left = "10px";
+    showTableButton.style.cursor = "pointer";
     container.appendChild(showTableButton);
 
     const imageContainer = document.createElement("div");
@@ -148,4 +156,5 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
     document.head.appendChild(style);
 });
+
 
