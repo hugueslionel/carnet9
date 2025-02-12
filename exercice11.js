@@ -76,8 +76,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (!document.querySelector(`img[src='${image.src}']`)) {
             const imgElement = document.createElement("img");
             imgElement.src = image.src;
-            imgElement.style.width = "200px";
-            imgElement.style.height = "200px";
+            imgElement.style.width = "250px";
+            imgElement.style.height = "250px";
             imgElement.style.margin = "10px";
             imgElement.style.objectFit = "contain";
             imgElement.style.border = "none";
