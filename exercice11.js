@@ -144,18 +144,5 @@ document.addEventListener("DOMContentLoaded", async function () {
             request.onerror = (event) => reject("Erreur d'ouverture de la base IndexedDB.");
         });
     }
-
-    // Styles pour l'impression
-    const style = document.createElement("style");
-    style.textContent = `
-        @media print {
-            img {
-                max-width: 100%;
-                page-break-inside: avoid;
-                object-fit: contain;
-            }
-        }
-    `;
-    document.head.appendChild(style);
 });
 
