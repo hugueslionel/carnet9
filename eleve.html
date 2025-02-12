@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page de l'élève</title>
     <style>
+        /* Styles pour l'écran */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -19,92 +20,102 @@
             border: 1px solid #ccc;
             background-color: #ffffff;
         }
-    
-       section:nth-of-type(1) {
-           min-height: 5cm;
-       }
-       section:nth-of-type(2) {
-           min-height: 5cm;
-       }
-       section:nth-of-type(3) {
-           min-height: 7cm;
-       }
-       section:nth-of-type(4) {
-           min-height: 10cm;
-       }
-       section:nth-of-type(5) {
-           height: 10cm;
-       }
-       section:nth-of-type(6) {
-           min-height: 13cm;
-       }
-       section:nth-of-type(7) {
-           height: 28cm;
-       }
-       section:nth-of-type(8) {
-           min-height: 8cm;
-       }
-       section:nth-of-type(9) {
-           height: 34cm;
-       }
-       section:nth-of-type(10) {
-           height: 28cm;
-       }
 
+        section:nth-of-type(1) {
+            min-height: 5cm;
+        }
+        section:nth-of-type(2) {
+            min-height: 5cm;
+        }
+        section:nth-of-type(3) {
+            min-height: 7cm;
+        }
+        section:nth-of-type(4) {
+            min-height: 10cm;
+        }
+        section:nth-of-type(5) {
+            min-height: 6cm;
+        }
+        section:nth-of-type(6) {
+            min-height: 13cm;
+        }
+        section:nth-of-type(7) {
+            min-height: 15cm;
+        }
+        section:nth-of-type(8) {
+            min-height: 8cm;
+        }
+        section:nth-of-type(9) {
+            min-height: 20cm;
+        }
+        section:nth-of-type(10) {
+            min-height: 28cm;
+        }
+
+        /* Styles pour l'impression */
+        @media print {
+            @page {
+                size: A4;
+                margin: 1cm; /* Marges de 1 cm sur tous les côtés */
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Forcer un saut de page après la cinquième section */
+            section:nth-of-type(5) {
+                page-break-after: always;
+            }
+        }
     </style>
 </head>
 <body>
     <h1 id="studentName">Page de l'élève</h1>
     <section>
-      <h2>Je reconnais les lettres majuscules</h2>
-      <div id="exercice1"></div>
+        <h2>Je reconnais les lettres majuscules</h2>
+        <div id="exercice1"></div>
     </section>
-   <section>
-      <h2>Je reconnais les lettres minuscules</h2>
-      <div id="exercice2"></div>
-   </section>
     <section>
-      <h2>Je reconnais les lettres cursives</h2>
-      <div id="exercice3"></div>
+        <h2>Je reconnais les lettres minuscules</h2>
+        <div id="exercice2"></div>
     </section>
-  <section>
-    <h2>Je sais compter jusqu'à: </h2>
-    <div id="exercice4"></div>
-  </section>
-  <section>
-    <h2>Je sais lire les nombres</h2>
-    <div id="exercice5"></div>
-  </section>
-  <section>
-    <h2>Je reconnais les formes géométriques</h2>
-    <div id="exercice6"></div>
-  </section>
-
-<section>
-    <h2>Je sais dénombrer</h2>
-    <div id="exercice7"></div>
-</section>
-<section>
-    <h2>Je reconnais des mots dans les 3 écritures</h2>
-    <div id="exercice8"></div>
-</section>
-      
-<section>
-    <h2>Je sais ranger du plus petit au plus grand</h2>
-    <div id="exercise9-container"></div>
-</section>
-
-<section>
-    <div style="background-color: #d4f5d4; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
-Mobiliser le langage dans toutes ses dimensions : l'oral
-</div>
-    <br><br>
-    <div id="exercise11"></div>
-</section>
-
-
-
-   
+    <section>
+        <h2>Je reconnais les lettres cursives</h2>
+        <div id="exercice3"></div>
+    </section>
+    <section>
+        <h2>Je sais compter jusqu'à: </h2>
+        <div id="exercice4"></div>
+    </section>
+    <section>
+        <h2>Je sais lire les nombres</h2>
+        <div id="exercice5"></div>
+    </section>
+    <section>
+        <h2>Je reconnais les formes géométriques</h2>
+        <div id="exercice6"></div>
+    </section>
+    <section>
+        <h2>Je sais dénombrer</h2>
+        <div id="exercice7"></div>
+    </section>
+    <section>
+        <h2>Je reconnais des mots dans les 3 écritures</h2>
+        <div id="exercice8"></div>
+    </section>
+    <section>
+        <h2>Je sais ranger du plus petit au plus grand</h2>
+        <div id="exercise9-container"></div>
+    </section>
+    <section>
+        <div style="background-color: #d4f5d4; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
+            Mobiliser le langage dans toutes ses dimensions : l'oral
+        </div>
+        <br><br>
+        <div id="exercise11"></div>
+    </section>
 
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -113,19 +124,17 @@ Mobiliser le langage dans toutes ses dimensions : l'oral
             document.getElementById('studentName').textContent = `${name}`;
         }
     </script>
-  <script src="db.js"></script>
-  <script src="exercice.js"></script>
-  <script src="db.js"></script>
-  <script src="exercice6.js"></script>
-  <script src="db.js"></script>
-  <script src="exercice7.js"></script>
-  <script src="db.js"></script>
-  <script src="exercice8.js"></script>
-  <script src="db.js"></script>
-  <script src="exercice9.js"></script>
-  <script src="db.js"></script>
-  <script src="exercice11.js"></script>
-
- 
+    <script src="db.js"></script>
+    <script src="exercice.js"></script>
+    <script src="db.js"></script>
+    <script src="exercice6.js"></script>
+    <script src="db.js"></script>
+    <script src="exercice7.js"></script>
+    <script src="db.js"></script>
+    <script src="exercice8.js"></script>
+    <script src="db.js"></script>
+    <script src="exercice9.js"></script>
+    <script src="db.js"></script>
+    <script src="exercice11.js"></script>
 </body>
 </html>
