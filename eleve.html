@@ -34,7 +34,7 @@
             min-height: 10cm;
         }
         section:nth-of-type(5) {
-            min-height: 6cm;
+            min-height: 10cm;
         }
         section:nth-of-type(6) {
             min-height: 13cm;
@@ -69,14 +69,21 @@
                 page-break-after: always;
             }
 
-            /* Forcer un saut de page après la 7 section */
+            /* Forcer un saut de page après la septième section */
             section:nth-of-type(7) {
                 page-break-after: always;
             }
 
-            /* Forcer un saut de page après la 9 section */
+            /* Forcer un saut de page après la neuvième section */
             section:nth-of-type(9) {
                 page-break-after: always;
+            }
+
+            /* Empêcher les images d'être coupées entre deux pages */
+            img {
+                page-break-inside: avoid; /* Empêche l'image d'être coupée */
+                max-width: 100%; /* Assure que l'image ne dépasse pas la largeur de la page */
+                height: auto; /* Maintient le ratio de l'image */
             }
         }
     </style>
@@ -86,10 +93,12 @@
     <section>
         <h2>Je reconnais les lettres majuscules</h2>
         <div id="exercice1"></div>
+        <img src="image1.jpg" alt="Exemple d'image 1">
     </section>
     <section>
         <h2>Je reconnais les lettres minuscules</h2>
         <div id="exercice2"></div>
+        <img src="image2.jpg" alt="Exemple d'image 2">
     </section>
     <section>
         <h2>Je reconnais les lettres cursives</h2>
