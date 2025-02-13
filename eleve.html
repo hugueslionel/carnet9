@@ -86,6 +86,23 @@
                 height: auto; /* Maintient le ratio de l'image */
             }
         }
+    @media print {
+        #exercise11 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 images par ligne */
+            gap: 10px; /* Espacement entre les images */
+            justify-items: center; /* Centre les images dans chaque colonne */
+            width: 100%; /* Prend toute la largeur disponible */
+            margin: auto; /* Centre le conteneur sur la page */
+        }
+
+        #exercise11 img {
+            max-width: 100%; /* Les images occupent toute la colonne */
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Centre chaque image */
+        }
+    }
     </style>
 </head>
 <body>
