@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             imgElement.id = image.id;
             imgElement.style.width = "150px";
             imgElement.style.height = "150px";
-            imgElement.style.margin = "10px";
+            imgElement.style.margin = "5px";
             imgElement.style.cursor = "pointer";
             imgElement.style.objectFit = "contain";
             imgElement.style.border = "2px solid transparent";
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             imgElement.src = image.src;
             imgElement.style.width = "260px";
             imgElement.style.height = "auto";
-            imgElement.style.margin = "10px";
+            imgElement.style.margin = "20px";
             imgElement.style.objectFit = "contain";
             imgElement.style.border = "none";
             container.appendChild(imgElement);
