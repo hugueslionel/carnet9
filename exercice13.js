@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
-    const storageKey = `exercice11_selectedImages_${studentName}`;
+    const storageKey = `exercice13_selectedImages_${studentName}`;
 
     // Images disponibles dans le tableau
-    const images = Array.from({ length: 12 }, (_, index) => ({
+    const images = Array.from({ length: 18 }, (_, index) => ({
         id: `image${index + 1}`,
-        src: `images2/im${index + 1}.jpeg`
+        src: `images4/mat${index + 1}.jpeg`
     }));
 
-    const container = document.getElementById("exercise11");
+    const container = document.getElementById("exercise13");
     container.style.position = "relative"; // Position relative pour maintenir les éléments fixes dans la section
 
     // Bouton pour afficher le tableau d'images
