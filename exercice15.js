@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Images disponibles dans le tableau
     const images = Array.from({ length: 9 }, (_, index) => ({
         id: `image${index + 1}`,
-        src: `images1/art${index + 1}.jpeg`
+        src: `images1/viv${index + 1}.jpeg`
     }));
 
     const container = document.getElementById("exercise15");
