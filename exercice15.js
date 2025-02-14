@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const storageKey = `exercice15_selectedImages_${studentName}`;
 
     // Images disponibles dans le tableau
-    const images = Array.from({ length: 10 }, (_, index) => ({
+    const images = Array.from({ length: 9 }, (_, index) => ({
         id: `image${index + 1}`,
         src: `images1/viv${index + 1}.jpeg`
     }));
