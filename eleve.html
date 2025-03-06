@@ -54,6 +54,9 @@
         section:nth-of-type(11) {
             min-height: 20cm;
         }
+        section:nth-of-type(12) {
+            min-height: 20cm;
+        }
         /* Styles pour l'impression */
         @media print {
             @page {
@@ -83,6 +86,10 @@
             
             /* Forcer un saut de page après la 10 section */
             section:nth-of-type(10) {
+                page-break-after: always;
+            }
+            /* Forcer un saut de page après la 11 section */
+            section:nth-of-type(11) {
                 page-break-after: always;
             }
 
@@ -120,6 +127,22 @@
         }
 
         #exercise12 img {
+            max-width: 100%; /* Les images occupent toute la colonne */
+            height: auto;
+            display: block;
+        }
+        
+        #exercise13 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 images par ligne */
+            gap: 5px 10px; /* Espacement entre les images */
+            justify-items: center; /* Centre les images horizontalement dans chaque colonne */
+            align-items: center; /* Centre les images verticalement dans chaque cellule */
+            width: 100%; /* Prend toute la largeur disponible */
+            margin: auto; /* Centre le conteneur sur la page */
+        }
+
+        #exercise13 img {
             max-width: 100%; /* Les images occupent toute la colonne */
             height: auto;
             display: block;
@@ -179,6 +202,13 @@
         <br><br>
         <div id="exercise12"></div>
     </section>
+    <section>
+        <div style="background-color: #D2CAEC; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
+            Structurer sa pensée et explorer le monde
+        </div>
+        <br><br>
+        <div id="exercise13"></div>
+    </section>
 
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -201,5 +231,7 @@
     <script src="exercice11.js"></script>
     <script src="db.js"></script>
     <script src="exercice12.js"></script>
+    <script src="db.js"></script>
+    <script src="exercice13.js"></script>
 </body>
 </html>
