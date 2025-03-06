@@ -57,6 +57,12 @@
         section:nth-of-type(12) {
             min-height: 20cm;
         }
+        section:nth-of-type(13) {
+            min-height: 20cm;
+        }
+        section:nth-of-type(14) {
+            min-height: 20cm;
+        }
         /* Styles pour l'impression */
         @media print {
             @page {
@@ -90,6 +96,14 @@
             }
             /* Forcer un saut de page après la 11 section */
             section:nth-of-type(11) {
+                page-break-after: always;
+            }
+            /* Forcer un saut de page après la 12 section */
+            section:nth-of-type(12) {
+                page-break-after: always;
+            }
+            /* Forcer un saut de page après la 13 section */
+            section:nth-of-type(13) {
                 page-break-after: always;
             }
 
@@ -143,6 +157,38 @@
         }
 
         #exercise13 img {
+            max-width: 100%; /* Les images occupent toute la colonne */
+            height: auto;
+            display: block;
+        }
+
+        #exercise14 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 images par ligne */
+            gap: 5px 10px; /* Espacement entre les images */
+            justify-items: center; /* Centre les images horizontalement dans chaque colonne */
+            align-items: center; /* Centre les images verticalement dans chaque cellule */
+            width: 100%; /* Prend toute la largeur disponible */
+            margin: auto; /* Centre le conteneur sur la page */
+        }
+
+        #exercise14 img {
+            max-width: 100%; /* Les images occupent toute la colonne */
+            height: auto;
+            display: block;
+        }
+
+        #exercise15 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 images par ligne */
+            gap: 5px 10px; /* Espacement entre les images */
+            justify-items: center; /* Centre les images horizontalement dans chaque colonne */
+            align-items: center; /* Centre les images verticalement dans chaque cellule */
+            width: 100%; /* Prend toute la largeur disponible */
+            margin: auto; /* Centre le conteneur sur la page */
+        }
+
+        #exercise15 img {
             max-width: 100%; /* Les images occupent toute la colonne */
             height: auto;
             display: block;
@@ -209,6 +255,21 @@
         <br><br>
         <div id="exercise13"></div>
     </section>
+    <section>
+        <div style="background-color: #FEA347; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
+            Activités physiques et artistiques
+        </div>
+        <br><br>
+        <div id="exercise14"></div>
+    </section>
+    <section>
+        <div style="background-color: #B0E0E6; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
+            Vivre ensemble
+        </div>
+        <br><br>
+        <div id="exercise15"></div>
+    </section>
+    
 
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -233,5 +294,9 @@
     <script src="exercice12.js"></script>
     <script src="db.js"></script>
     <script src="exercice13.js"></script>
+    <script src="db.js"></script>
+    <script src="exercice14.js"></script>
+    <script src="db.js"></script>
+    <script src="exercice15.js"></script>
 </body>
 </html>
