@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page de l'élève</title>
     <style>
-        /* Styles pour l'écran */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -19,284 +18,90 @@
             padding: 10px;
             border: 1px solid #ccc;
             background-color: #ffffff;
-        }
-
-        section:nth-of-type(1) {
             min-height: 5cm;
         }
-        section:nth-of-type(2) {
-            min-height: 5cm;
-        }
-        section:nth-of-type(3) {
-            min-height: 7cm;
-        }
-        section:nth-of-type(4) {
-            min-height: 7cm;
-        }
-        section:nth-of-type(5) {
-            min-height: 5cm;
-        }
-        section:nth-of-type(6) {
-            min-height: 13cm;
-        }
-        section:nth-of-type(7) {
-            min-height: 15cm;
-        }
-        section:nth-of-type(8) {
-            min-height: 8cm;
-        }
-        section:nth-of-type(9) {
-            min-height: 14cm;
-        }
-        section:nth-of-type(10) {
-            min-height: 20cm;
-        }
-        section:nth-of-type(11) {
-            min-height: 20cm;
-        }
-        section:nth-of-type(12) {
-            min-height: 20cm;
-        }
-        section:nth-of-type(13) {
-            min-height: 20cm;
-        }
-        section:nth-of-type(14) {
-            min-height: 20cm;
-        }
+        
         /* Styles pour l'impression */
         @media print {
             @page {
                 size: A4;
-                margin: 1.27cm; /* Marges de 1 cm sur tous les côtés */
+                margin: 1cm;
             }
-
             body {
                 margin: 0;
                 padding: 0;
             }
-
-            /* Forcer un saut de page après la cinquième section */
-            section:nth-of-type(5) {
-                page-break-after: always;
-            }
-
-            /* Forcer un saut de page après la septième section */
-            section:nth-of-type(7) {
-                page-break-after: always;
-            }
-
-            /* Forcer un saut de page après la neuvième section */
-            section:nth-of-type(9) {
-                page-break-after: always;
+            
+            section:nth-of-type(5),
+            section:nth-of-type(7),
+            section:nth-of-type(9),
+            section:nth-of-type(10),
+            section:nth-of-type(11),
+            section:nth-of-type(12),
+            section:nth-of-type(13) {
+                page-break-before: always;
             }
             
-            /* Forcer un saut de page après la 10 section */
-            section:nth-of-type(10) {
-                page-break-after: always;
-            }
-            /* Forcer un saut de page après la 11 section */
-            section:nth-of-type(11) {
-                page-break-after: always;
-            }
-            /* Forcer un saut de page après la 12 section */
-            section:nth-of-type(12) {
-                page-break-after: always;
-            }
-            /* Forcer un saut de page après la 13 section */
-            section:nth-of-type(13) {
-                page-break-after: always;
-            }
-
-            /* Empêcher les images d'être coupées entre deux pages */
             img {
-                page-break-inside: avoid; /* Empêche l'image d'être coupée */
-                max-width: 100%; /* Assure que l'image ne dépasse pas la largeur de la page */
-                height: auto; /* Maintient le ratio de l'image */
+                page-break-inside: avoid;
+                max-width: 100%;
+                height: auto;
+            }
+            
+            [id^="exercise"] {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px 10px;
+                justify-items: center;
+                align-items: center;
+                width: 100%;
+                margin: auto;
+            }
+            [id^="exercise"] img {
+                max-width: 100%;
+                height: auto;
+                display: block;
             }
         }
-    @media print {
-        #exercise11 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 images par ligne */
-            gap: 5px 10px; /* Espacement entre les images */
-            justify-items: center; /* Centre les images horizontalement dans chaque colonne */
-            align-items: center; /* Centre les images verticalement dans chaque cellule */
-            width: 100%; /* Prend toute la largeur disponible */
-            margin: auto; /* Centre le conteneur sur la page */
-        }
-
-        #exercise11 img {
-            max-width: 100%; /* Les images occupent toute la colonne */
-            height: auto;
-            display: block;
-        }
-        #exercise12 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 images par ligne */
-            gap: 5px 10px; /* Espacement entre les images */
-            justify-items: center; /* Centre les images horizontalement dans chaque colonne */
-            align-items: center; /* Centre les images verticalement dans chaque cellule */
-            width: 100%; /* Prend toute la largeur disponible */
-            margin: auto; /* Centre le conteneur sur la page */
-        }
-
-        #exercise12 img {
-            max-width: 100%; /* Les images occupent toute la colonne */
-            height: auto;
-            display: block;
-        }
-        
-        #exercise13 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 images par ligne */
-            gap: 5px 10px; /* Espacement entre les images */
-            justify-items: center; /* Centre les images horizontalement dans chaque colonne */
-            align-items: center; /* Centre les images verticalement dans chaque cellule */
-            width: 100%; /* Prend toute la largeur disponible */
-            margin: auto; /* Centre le conteneur sur la page */
-        }
-
-        #exercise13 img {
-            max-width: 100%; /* Les images occupent toute la colonne */
-            height: auto;
-            display: block;
-        }
-
-        #exercise14 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 images par ligne */
-            gap: 5px 10px; /* Espacement entre les images */
-            justify-items: center; /* Centre les images horizontalement dans chaque colonne */
-            align-items: center; /* Centre les images verticalement dans chaque cellule */
-            width: 100%; /* Prend toute la largeur disponible */
-            margin: auto; /* Centre le conteneur sur la page */
-        }
-
-        #exercise14 img {
-            max-width: 100%; /* Les images occupent toute la colonne */
-            height: auto;
-            display: block;
-        }
-
-        #exercise15 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 images par ligne */
-            gap: 5px 10px; /* Espacement entre les images */
-            justify-items: center; /* Centre les images horizontalement dans chaque colonne */
-            align-items: center; /* Centre les images verticalement dans chaque cellule */
-            width: 100%; /* Prend toute la largeur disponible */
-            margin: auto; /* Centre le conteneur sur la page */
-        }
-
-        #exercise15 img {
-            max-width: 100%; /* Les images occupent toute la colonne */
-            height: auto;
-            display: block;
-        }
-    }
     </style>
 </head>
 <body>
     <h1 id="studentName">Page de l'élève</h1>
-    <section>
-        <h2>Je reconnais les lettres majuscules</h2>
-        <div id="exercice1"></div>
-    </section>
-    <section>
-        <h2>Je reconnais les lettres minuscules</h2>
-        <div id="exercice2"></div>
-    </section>
-    <section>
-        <h2>Je reconnais les lettres cursives</h2>
-        <div id="exercice3"></div>
-    </section>
-    <section>
-        <h2>Je sais compter jusqu'à: </h2>
-        <div id="exercice4"></div>
-    </section>
-    <section>
-        <h2>Je sais lire les nombres</h2>
-        <div id="exercice5"></div>
-    </section>
-    <section>
-        <h2>Je reconnais les formes géométriques</h2>
-        <div id="exercice6"></div>
-    </section>
-    <section>
-        <h2>Je sais dénombrer</h2>
-        <div id="exercice7"></div>
-    </section>
-    <section>
-        <h2>Je reconnais des mots dans les 3 écritures</h2>
-        <div id="exercice8"></div>
-    </section>
-    <section>
-        <h2>Je sais ranger du plus petit au plus grand</h2>
-        <div id="exercise9-container"></div>
-    </section>
-    <section>
-        <div style="background-color: #d4f5d4; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
-            Mobiliser le langage dans toutes ses dimensions : l'oral
-        </div>
-        <br><br>
-        <div id="exercise11"></div>
-    </section>
-    <section>
-        <div style="background-color: #FF6347; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
-            Mobiliser le langage dans toutes ses dimensions : l'écrit
-        </div>
-        <br><br>
-        <div id="exercise12"></div>
-    </section>
-    <section>
-        <div style="background-color: #D2CAEC; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
-            Structurer sa pensée et explorer le monde
-        </div>
-        <br><br>
-        <div id="exercise13"></div>
-    </section>
-    <section>
-        <div style="background-color: #FEA347; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
-            Activités physiques et artistiques
-        </div>
-        <br><br>
-        <div id="exercise14"></div>
-    </section>
-    <section>
-        <div style="background-color: #B0E0E6; padding: 10px; border: 1px solid #ccc; max-width: 50%; margin: auto; text-align: center; font-family: Arial, sans-serif; font-size: 20px;">
-            Vivre ensemble
-        </div>
-        <br><br>
-        <div id="exercise15"></div>
-    </section>
     
+    <section><h2>Je reconnais les lettres majuscules</h2><div id="exercice1"></div></section>
+    <section><h2>Je reconnais les lettres minuscules</h2><div id="exercice2"></div></section>
+    <section><h2>Je reconnais les lettres cursives</h2><div id="exercice3"></div></section>
+    <section><h2>Je sais compter jusqu'à:</h2><div id="exercice4"></div></section>
+    <section><h2>Je sais lire les nombres</h2><div id="exercice5"></div></section>
+    <section><h2>Je reconnais les formes géométriques</h2><div id="exercice6"></div></section>
+    <section><h2>Je sais dénombrer</h2><div id="exercice7"></div></section>
+    <section><h2>Je reconnais des mots dans les 3 écritures</h2><div id="exercice8"></div></section>
+    <section><h2>Je sais ranger du plus petit au plus grand</h2><div id="exercise9-container"></div></section>
+    
+    <section><h2>Mobiliser le langage dans toutes ses dimensions : l'oral</h2><div id="exercise11"></div></section>
+    <section><h2>Mobiliser le langage dans toutes ses dimensions : l'écrit</h2><div id="exercise12"></div></section>
+    <section><h2>Structurer sa pensée et explorer le monde</h2><div id="exercise13"></div></section>
+    <section><h2>Activités physiques et artistiques</h2><div id="exercise14"></div></section>
+    <section><h2>Vivre ensemble</h2><div id="exercise15"></div></section>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         const name = params.get('name');
         if (name) {
-            document.getElementById('studentName').textContent = `${name}`;
+            document.getElementById('studentName').textContent = name;
         }
     </script>
+    
     <script src="db.js"></script>
     <script src="exercice.js"></script>
-    <script src="db.js"></script>
     <script src="exercice6.js"></script>
-    <script src="db.js"></script>
     <script src="exercice7.js"></script>
-    <script src="db.js"></script>
     <script src="exercice8.js"></script>
-    <script src="db.js"></script>
     <script src="exercice9.js"></script>
-    <script src="db.js"></script>
     <script src="exercice11.js"></script>
-    <script src="db.js"></script>
     <script src="exercice12.js"></script>
-    <script src="db.js"></script>
     <script src="exercice13.js"></script>
-    <script src="db.js"></script>
     <script src="exercice14.js"></script>
-    <script src="db.js"></script>
     <script src="exercice15.js"></script>
 </body>
 </html>
