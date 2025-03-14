@@ -85,5 +85,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     loadInitialImages();
 });
+@media print {
+    #image-container {
+        display: block !important; /* Force l'affichage du bandeau */
+        min-height: 50px; /* Ajustez selon la hauteur attendue */
+    }
+    
+    #image-table {
+        display: table !important; /* Force l'affichage du tableau */
+    }
+
+    #image-band img {
+        visibility: visible !important; /* Force l'affichage des images */
+    }
+}
 
 
