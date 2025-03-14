@@ -1,147 +1,89 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
-    const storageKey = `exercice9_${studentName}`;
+    const imageBand = document.getElementById("image-band");
+    const imageTable = document.getElementById("image-table");
+    const studentNameDisplay = document.getElementById("student-name");
+
+    if (studentName) {
+        studentName.textContent = studentName;
+    }
+
+    const studentKey = `student-${studentName}`;
 
     const initialPositions = [
-        { id: "animal1", src: "images/animal1.jpeg", row: null, col: null },
-        { id: "animal2", src: "images/animal2.jpeg", row: null, col: null },
-        { id: "animal3", src: "images/animal3.jpeg", row: null, col: null },
-        { id: "animal4", src: "images/animal4.jpeg", row: null, col: null },
-        { id: "animal5", src: "images/animal5.jpeg", row: null, col: null }
+        { id: "animal1", src: "images/animal1.png", row: null, col: null },
+        { id: "animal2", src: "images/animal2.png", row: null, col: null },
+        { id: "animal3", src: "images/animal3.png", row: null, col: null },
+        { id: "animal4", src: "images/animal4.png", row: null, col: null }
     ];
 
-    // Charger les positions sauvegardées ou utiliser les positions initiales
-    const savedPositions = await loadState(storageKey);
+    const savedPositions = await loadPositions(studentName);
     const positions = savedPositions.length ? savedPositions : initialPositions;
 
-    const container = document.getElementById("exercise9-container");
-
-    // Bandeau des images
-    const imageBand = document.createElement("div");
-    imageBand.style.display = "flex";
-    imageBand.style.justifyContent = "center";
-    imageBand.style.gap = "20px";
-    imageBand.style.marginBottom = "40px";
-    imageBand.style.minHeight = "100px"; // Garde un espace même vide
-
-    // Tableau de rangement
-    const table = document.createElement("table");
-    table.style.borderCollapse = "collapse";
-    table.style.margin = "auto";
-
-    const tr = document.createElement("tr");
-    for (let col = 0; col < 5; col++) {
-        const td = document.createElement("td");
-        td.style.width = "100px";
-        td.style.height = "100px";
-        td.style.border = "1px solid #ccc";
-        td.style.backgroundColor = "#f9f9f9";
-        td.style.position = "relative";
-        td.style.textAlign = "center";
-        td.style.verticalAlign = "middle";
-        td.dataset.row = 0;
-        td.dataset.col = col;
-
-        // Permet de déposer les images
-        td.addEventListener("dragover", (event) => event.preventDefault());
-        td.addEventListener("drop", (event) => {
-            event.preventDefault();
-            const imgId = event.dataTransfer.getData("text");
-            const img = document.getElementById(imgId);
-            if (img) {
-                td.appendChild(img);
-                updatePositions(imgId, 0, col);
-            }
-        });
-
-        tr.appendChild(td);
-    }
-    table.appendChild(tr);
-
-    // Ajout du bandeau et du tableau dans le conteneur
-    container.appendChild(imageBand);
-    container.appendChild(table);
-
-    // Placement des images
-    positions.forEach((pos) => {
+    positions.forEach(pos => {
         const img = document.createElement("img");
         img.id = pos.id;
         img.src = pos.src;
-        img.style.width = "80px";
-        img.style.height = "80px";
-        img.style.cursor = "grab";
-        img.style.objectFit = "contain";
         img.draggable = true;
-
-        // Ajout des événements de glisser-déposer
+        img.classList.add("draggable-image");
         img.addEventListener("dragstart", (event) => {
-            event.dataTransfer.setData("text", event.target.id);
+            event.dataTransfer.setData("text", pos.id);
         });
 
-        // Placement dans le tableau ou le bandeau
         if (pos.row === null && pos.col === null) {
-            imageBand.appendChild(img); // Si non placé, reste dans le bandeau
+            imageBand.appendChild(img);
         } else {
-            const targetCell = table.querySelector(`[data-row='${pos.row}'][data-col='${pos.col}']`);
+            const targetCell = document.querySelector(`#image-table td[data-row="${pos.row}"][data-col="${pos.col}"]`);
             if (targetCell) {
                 targetCell.appendChild(img);
             }
         }
     });
 
-    // Mise à jour des positions dans IndexedDB
-    function updatePositions(imgId, row, col) {
-        const index = positions.findIndex((pos) => pos.id === imgId);
-        if (index !== -1) {
-            positions[index].row = row;
-            positions[index].col = col;
-            saveState(storageKey, positions); // Sauvegarde immédiate
+    // Cacher le bandeau si aucune image n'est présente dedans
+    function updateImageBandVisibility() {
+        if (imageBand.childElementCount === 0) {
+            imageBand.style.display = "none";
+        } else {
+            imageBand.style.display = "flex";
         }
     }
 
-    // IndexedDB : Sauvegarder les données
-    function saveState(key, data) {
-        return openDB().then((db) => {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction("exercices", "readwrite");
-                const store = transaction.objectStore("exercices");
-                const request = store.put(data, key);
-
-                request.onsuccess = resolve;
-                request.onerror = reject;
-            });
-        });
+    function updatePositions(id, row, col) {
+        const pos = positions.find(p => p.id === id);
+        if (pos) {
+            pos.row = row;
+            pos.col = col;
+            savePositions();
+            updateImageBandVisibility();
+        }
     }
 
-    // IndexedDB : Charger les données
-    function loadState(key) {
-        return openDB().then((db) => {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction("exercices", "readonly");
-                const store = transaction.objectStore("exercices");
-                const request = store.get(key);
-
-                request.onsuccess = () => resolve(request.result || []);
-                request.onerror = () => reject([]);
+    function loadInitialImages() {
+        imageBand.innerHTML = ""; // Effacer les images précédentes si besoin
+        positions.forEach((pos) => {
+            const img = document.createElement("img");
+            img.id = pos.id;
+            img.src = pos.src;
+            img.draggable = true;
+            img.style.objectFit = "contain";
+            img.addEventListener("dragstart", (event) => {
+                event.dataTransfer.setData("text", pos.id);
             });
-        });
-    }
-
-    // IndexedDB : Ouvrir ou créer la base
-    function openDB() {
-        return new Promise((resolve, reject) => {
-            const request = indexedDB.open("exercicesDB", 1);
-
-            request.onupgradeneeded = (event) => {
-                const db = event.target.result;
-                if (!db.objectStoreNames.contains("exercices")) {
-                    db.createObjectStore("exercices");
+            
+            if (pos.row === null && pos.col === null) {
+                imageBand.appendChild(img);
+            } else {
+                const targetCell = document.querySelector(`#image-table td[data-row="${pos.row}"][data-col="${pos.col}"]`);
+                if (targetCell) {
+                    targetCell.appendChild(img);
                 }
-            };
-
-            request.onsuccess = (event) => resolve(event.target.result);
-            request.onerror = (event) => reject("Erreur d'ouverture de la base IndexedDB.");
+            }
         });
+        updateImageBandVisibility();
     }
+    
+    loadInitialImages();
 });
+
 
