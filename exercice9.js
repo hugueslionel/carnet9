@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     imageBand.style.justifyContent = "center";
     imageBand.style.gap = "20px";
     imageBand.style.marginBottom = "40px";
+    imageBand.style.minHeight = "100px"; // Garde un espace même vide
 
     // Tableau de rangement
     const table = document.createElement("table");
