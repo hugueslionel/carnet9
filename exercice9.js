@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Bandeau des images
     const imageBand = document.createElement("div");
+    imageBand.id = "image-band";
     imageBand.style.display = "flex";
     imageBand.style.justifyContent = "center";
     imageBand.style.gap = "20px";
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Tableau de rangement
     const table = document.createElement("table");
+    table.id = "storage-table";
     table.style.borderCollapse = "collapse";
     table.style.margin = "auto";
 
@@ -143,3 +145,32 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 });
+
+// Ajouter des styles CSS pour l'impression
+const style = document.createElement("style");
+style.textContent = `
+    @media print {
+        #image-band {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            page-break-inside: avoid; /* Évite de couper le bandeau sur plusieurs pages */
+        }
+        #image-band img {
+            display: inline-block;
+            margin: 5px;
+            width: 60px;
+            height: 60px;
+        }
+        #storage-table {
+            display: block;
+            margin: 0 auto;
+            page-break-inside: avoid; /* Évite de couper le tableau sur plusieurs pages */
+        }
+        #storage-table td {
+            width: 80px;
+            height: 80px;
+        }
+    }
+`;
+document.head.appendChild(style);
