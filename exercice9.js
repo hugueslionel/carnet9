@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const imageBand = document.createElement("div");
     imageBand.id = "image-band";
     imageBand.style.display = "flex";
+    imageBand.style.flexWrap = "wrap";
     imageBand.style.justifyContent = "center";
     imageBand.style.gap = "20px";
     imageBand.style.marginBottom = "40px";
@@ -150,26 +151,22 @@ document.addEventListener("DOMContentLoaded", async function () {
 const style = document.createElement("style");
 style.textContent = `
     @media print {
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
         #image-band {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+            display: block;
+            text-align: center;
             margin-bottom: 20px;
-            page-break-inside: avoid; /* Évite de couper le bandeau sur plusieurs pages */
+            page-break-after: avoid; /* Évite de couper le bandeau */
         }
         #image-band img {
+            display: inline-block;
+            margin: 5px;
             width: 60px;
             height: 60px;
         }
         #storage-table {
-            margin-top: 20px;
-            page-break-inside: avoid; /* Évite de couper le tableau sur plusieurs pages */
+            display: block;
+            margin: 20px auto;
+            page-break-before: avoid; /* Évite de couper le tableau */
         }
         #storage-table td {
             width: 80px;
