@@ -150,21 +150,25 @@ document.addEventListener("DOMContentLoaded", async function () {
 const style = document.createElement("style");
 style.textContent = `
     @media print {
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         #image-band {
-            display: block;
-            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
             margin-bottom: 20px;
             page-break-inside: avoid; /* Évite de couper le bandeau sur plusieurs pages */
         }
         #image-band img {
-            display: inline-block;
-            margin: 5px;
             width: 60px;
             height: 60px;
         }
         #storage-table {
-            display: block;
-            margin: 0 auto;
+            margin-top: 20px;
             page-break-inside: avoid; /* Évite de couper le tableau sur plusieurs pages */
         }
         #storage-table td {
