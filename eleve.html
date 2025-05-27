@@ -22,47 +22,73 @@
         }
         
         /* Styles pour l'impression */
-        @media print {
-            @page {
-                size: A4;
-                margin: 1cm;
-            }
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            
-            section:nth-of-type(6),
-            section:nth-of-type(8),
-            section:nth-of-type(10),
-            section:nth-of-type(11),
-            section:nth-of-type(12),
-            section:nth-of-type(13),
-            section:nth-of-type(14) {
-                page-break-before: always;
-            }
-            
-            img {
-                page-break-inside: avoid;
-                max-width: 100%;
-                height: auto;
-            }
-            
-            [id^="exercise"] {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 5px 10px;
-                justify-items: center;
-                align-items: center;
-                width: 100%;
-                margin: auto;
-            }
-            [id^="exercise"] img {
-                max-width: 100%;
-                height: auto;
-                display: block;
-            }
-        }
+@media print {
+    @page {
+        size: A4;
+        margin: 1cm;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    section:nth-of-type(6),
+    section:nth-of-type(8),
+    section:nth-of-type(10),
+    section:nth-of-type(11),
+    section:nth-of-type(12),
+    section:nth-of-type(13),
+    section:nth-of-type(14) {
+        page-break-before: always;
+    }
+
+    img {
+        page-break-inside: avoid;
+        max-width: 100%;
+        height: auto;
+    }
+
+    [id^="exercise"] {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px 10px;
+        justify-items: center;
+        align-items: center;
+        width: 100%;
+        margin: auto;
+    }
+
+    [id^="exercise"] img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Empêche les éléments vides de générer des pages */
+    section:empty {
+        display: none !important;
+    }
+
+    /* Supprime les marges excessives entre les sections */
+    section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 0;
+    }
+
+    /* Évite que les éléments invisibles créent des pages */
+    * {
+        visibility: visible;
+        overflow: visible;
+    }
+
+    /* Cacher les éléments non nécessaires à l'impression */
+    .no-print, header, footer, nav {
+        display: none !important;
+    }
+}
+
     </style>
 </head>
 <body>
