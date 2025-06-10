@@ -169,8 +169,8 @@ style.textContent = `
             page-break-before: avoid; /* Évite de couper le tableau */
         }
         #storage-table td {
-            width: 80px;
-            height: 80px;
+            width: 170px;
+            height: 170px;
         }
     }
 `;
