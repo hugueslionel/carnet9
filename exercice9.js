@@ -164,12 +164,11 @@ style.textContent = `
             height: 60px;
         }
        #storage-table {
-           display: table;    /* ← Changez "block" en "table" */
+           display: table !important;    /* ← Changez "block" en "table" */
            margin: 20px auto;
            page-break-before: avoid;
            border-collapse: collapse;
        }
-        }
         #storage-table td {
             width: 190px;
             height: 190px;
