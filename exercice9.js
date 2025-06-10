@@ -165,14 +165,14 @@ style.textContent = `
     
      #storage-table td {
         display: table-cell !important;
-        width: 120px !important;
-        height: 120px !important;
+        width: 190px !important;
+        height: 190px !important;
         border: 2px solid #000 !important;
      }
      
      #storage-table img {
-        width: 100px !important;
-        height: 100px !important;
+        width: 150px !important;
+        height: 150px !important;
      }
     }
 `;
