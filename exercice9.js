@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const tr = document.createElement("tr");
     for (let col = 0; col < 5; col++) {
         const td = document.createElement("td");
-        td.style.width = "100px";
-        td.style.height = "100px";
+        td.style.width = "200px";
+        td.style.height = "200px";
         td.style.border = "1px solid #ccc";
         td.style.backgroundColor = "#f9f9f9";
         td.style.position = "relative";
@@ -69,8 +69,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         const img = document.createElement("img");
         img.id = pos.id;
         img.src = pos.src;
-        img.style.width = "80px";
-        img.style.height = "80px";
+        img.style.width = "170px";
+        img.style.height = "170px";
         img.style.cursor = "grab";
         img.style.objectFit = "contain";
         img.draggable = true;
