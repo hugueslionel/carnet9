@@ -169,6 +169,11 @@ style.textContent = `
         height: 120px !important;
         border: 2px solid #000 !important;
      }
+     
+     #storage-table img {
+        width: 100px !important;
+        height: 100px !important;
+     }
     }
 `;
 document.head.appendChild(style);
