@@ -160,8 +160,8 @@ style.textContent = `
         #image-band img {
             display: inline-block;
             margin: 5px;
-            width: 100px;
-            height: 100px;
+            width: 60px;
+            height: 60px;
         }
         #storage-table {
             display: block;
@@ -169,9 +169,13 @@ style.textContent = `
             page-break-before: avoid; /* Évite de couper le tableau */
         }
         #storage-table td {
-            width: 80px;
-            height: 80px;
+            width: 190px;
+            height: 190px;
         }
+        #storage-table img {
+            width: 150px;   /* Ajustez selon la taille désirée */
+            height: 150px;
+       }
     }
 `;
 document.head.appendChild(style);
