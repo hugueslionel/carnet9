@@ -160,8 +160,8 @@ style.textContent = `
         #image-band img {
             display: inline-block;
             margin: 5px;
-            width: 60px;
-            height: 60px;
+            width: 100px;
+            height: 100px;
         }
         #storage-table {
             display: block;
@@ -169,8 +169,8 @@ style.textContent = `
             page-break-before: avoid; /* Évite de couper le tableau */
         }
         #storage-table td {
-            width: 170px;
-            height: 170px;
+            width: 80px;
+            height: 80px;
         }
     }
 `;
