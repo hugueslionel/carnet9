@@ -151,37 +151,24 @@ document.addEventListener("DOMContentLoaded", async function () {
 const style = document.createElement("style");
 style.textContent = `
     @media print {
-        #image-band {
-            display: block;
-            text-align: center;
-            margin-bottom: 20px;
-            page-break-after: avoid; /* Évite de couper le bandeau */
-        }
-        #image-band img {
-            display: inline-block;
-            margin: 5px;
-            width: 60px;
-            height: 60px;
-        }
+       
        #storage-table {
-           display: table !important;    /* ← Changez "block" en "table" */
-           margin: 20px auto;
-           page-break-before: avoid;
-           border-collapse: collapse;
-       }
-       #storage-table tr {
-           display: table-row !important;
-       }
-       #storage-table td {
-           display: table-cell !important;
-           width: 120px !important;
-           height: 120px !important;
-           border: 2px solid #000 !important;
-       }
-        #storage-table img {
-            width: 150px;   /* Ajustez selon la taille désirée */
-            height: 150px;
-       }
+        display: table !important;
+        margin: 20px auto;
+        page-break-before: avoid;
+        border-collapse: collapse;
+      }
+    
+     #storage-table tr {
+        display: table-row !important;
+     }
+    
+     #storage-table td {
+        display: table-cell !important;
+        width: 120px !important;
+        height: 120px !important;
+        border: 2px solid #000 !important;
+     }
     }
 `;
 document.head.appendChild(style);
