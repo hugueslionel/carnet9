@@ -152,27 +152,38 @@ document.addEventListener("DOMContentLoaded", async function () {
 const style = document.createElement("style");
 style.textContent = `
     @media print {
-        #image-band {
-            display: block;
-            text-align: center;
-            margin-bottom: 20px;
-            page-break-after: avoid; /* Évite de couper le bandeau */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
         }
-        #image-band img {
-            display: inline-block;
-            margin: 5px;
-            width: 60px;
-            height: 60px;
-        }
+       
         #storage-table {
-            display: block;
-            margin: 20px auto;
-            page-break-before: avoid; /* Évite de couper le tableau */
+            display: table !important;
+            margin: 20px auto !important;
+            page-break-before: avoid;
+            border-collapse: collapse !important;
         }
+    
+        #storage-table tr {
+            display: table-row !important;
+        }
+    
         #storage-table td {
-            width: 80px;
-            height: 80px;
+            display: table-cell !important;
+            width: 190px !important;
+            height: 190px !important;
+            border: 2px solid #000 !important;
+            min-width: 190px !important;
+            min-height: 190px !important;
+        }
+        
+        #storage-table td img {
+            width: 170px !important;
+            height: 170px !important;
+            max-width: 170px !important;
+            max-height: 170px !important;
         }
     }
 `;
+
 document.head.appendChild(style);
