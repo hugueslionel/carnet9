@@ -163,10 +163,12 @@ style.textContent = `
             width: 60px;
             height: 60px;
         }
-        #storage-table {
-            display: block;
-            margin: 20px auto;
-            page-break-before: avoid; /* Évite de couper le tableau */
+       #storage-table {
+           display: table;    /* ← Changez "block" en "table" */
+           margin: 20px auto;
+           page-break-before: avoid;
+           border-collapse: collapse;
+       }
         }
         #storage-table td {
             width: 190px;
