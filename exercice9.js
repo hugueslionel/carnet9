@@ -169,10 +169,15 @@ style.textContent = `
            page-break-before: avoid;
            border-collapse: collapse;
        }
-        #storage-table td {
-            width: 190px;
-            height: 190px;
-        }
+       #storage-table tr {
+           display: table-row !important;
+       }
+       #storage-table td {
+           display: table-cell !important;
+           width: 120px !important;
+           height: 120px !important;
+           border: 2px solid #000 !important;
+       }
         #storage-table img {
             width: 150px;   /* Ajustez selon la taille désirée */
             height: 150px;
