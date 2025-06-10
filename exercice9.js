@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
     const storageKey = `exercice9_${studentName}`;
@@ -34,8 +35,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const tr = document.createElement("tr");
     for (let col = 0; col < 5; col++) {
         const td = document.createElement("td");
-        td.style.width = "200px";
-        td.style.height = "200px";
+        td.style.width = "100px";
+        td.style.height = "100px";
         td.style.border = "1px solid #ccc";
         td.style.backgroundColor = "#f9f9f9";
         td.style.position = "relative";
@@ -69,8 +70,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         const img = document.createElement("img");
         img.id = pos.id;
         img.src = pos.src;
-        img.style.width = "170px";
-        img.style.height = "170px";
+        img.style.width = "80px";
+        img.style.height = "80px";
         img.style.cursor = "grab";
         img.style.objectFit = "contain";
         img.draggable = true;
@@ -146,44 +147,32 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     }
 });
+
 // Ajouter des styles CSS pour l'impression
 const style = document.createElement("style");
 style.textContent = `
     @media print {
-        * {
-            -webkit-print-color-adjust: exact !important;
-            color-adjust: exact !important;
+        #image-band {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            page-break-after: avoid; /* Évite de couper le bandeau */
         }
-       
+        #image-band img {
+            display: inline-block;
+            margin: 5px;
+            width: 60px;
+            height: 60px;
+        }
         #storage-table {
-            display: table !important;
-            margin: 20px auto !important;
-            page-break-before: avoid;
-            border-collapse: collapse !important;
+            display: block;
+            margin: 20px auto;
+            page-break-before: avoid; /* Évite de couper le tableau */
         }
-    
-        #storage-table tr {
-            display: table-row !important;
-        }
-    
         #storage-table td {
-            display: table-cell !important;
-            width: 190px !important;
-            height: 190px !important;
-            border: 2px solid #000 !important;
-            min-width: 190px !important;
-            min-height: 190px !important;
-        }
-        
-        #storage-table td img {
-            width: 170px !important;
-            height: 170px !important;
-            max-width: 170px !important;
-            max-height: 170px !important;
+            width: 80px;
+            height: 80px;
         }
     }
 `;
-
-
-`
 document.head.appendChild(style);
