@@ -1,13 +1,15 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
-    const storageKey = `exercice9_${studentName}`;
+    const storageKey = `exercice16_${studentName}`;
 
     const initialPositions = [
-        { id: "animal1", src: "images/animal1.jpeg", row: null, col: null },
-        { id: "animal2", src: "images/animal2.jpeg", row: null, col: null },
-        { id: "animal3", src: "images/animal3.jpeg", row: null, col: null },
-        { id: "animal4", src: "images/animal4.jpeg", row: null, col: null },
-        { id: "animal5", src: "images/animal5.jpeg", row: null, col: null }
+        { id: "seq1", src: "images6/seq1.jpeg", row: null, col: null },
+        { id: "seq2", src: "images6/seq2.jpeg", row: null, col: null },
+        { id: "seq3", src: "images6/seq3.jpeg", row: null, col: null },
+        { id: "seq4", src: "images6/seq4.jpeg", row: null, col: null },
+        { id: "seq5", src: "images6/seq5.jpeg", row: null, col: null },
+        { id: "seq6", src: "images6/seq6.jpeg", row: null, col: null }
+
     ];
 
     // Charger les positions sauvegardées ou utiliser les positions initiales
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     table.style.margin = "auto";
 
     const tr = document.createElement("tr");
-    for (let col = 0; col < 5; col++) {
+    for (let col = 0; col < 6; col++) {
         const td = document.createElement("td");
         td.style.width = "100px";
         td.style.height = "100px";
