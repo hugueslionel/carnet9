@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
     const storageKey = `exercice9_${studentName}`;
@@ -12,7 +11,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     ];
 
     // Charger les positions sauvegardées ou utiliser les positions initiales
-    const savedPositions = await loadState(storageKey);
+    let savedPositions = [];
+    try {
+        savedPositions = await loadState(storageKey);
+        // Si loadState retourne null, on utilise un tableau vide
+        if (!savedPositions) {
+            savedPositions = [];
+        }
+    } catch (error) {
+        console.error("Erreur lors du chargement des données:", error);
+        savedPositions = [];
+    }
+    
     const positions = savedPositions.length ? savedPositions : initialPositions;
 
     const container = document.getElementById("exercise9-container");
@@ -92,59 +102,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     });
 
-    // Mise à jour des positions dans IndexedDB
-    function updatePositions(imgId, row, col) {
+    // Mise à jour des positions - utilise les fonctions de db.js
+    async function updatePositions(imgId, row, col) {
         const index = positions.findIndex((pos) => pos.id === imgId);
         if (index !== -1) {
             positions[index].row = row;
             positions[index].col = col;
-            saveState(storageKey, positions); // Sauvegarde immédiate
+            try {
+                await saveState(storageKey, positions); // Utilise la fonction de db.js
+            } catch (error) {
+                console.error("Erreur lors de la sauvegarde:", error);
+            }
         }
-    }
-
-    // IndexedDB : Sauvegarder les données
-    function saveState(key, data) {
-        return openDB().then((db) => {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction("exercices", "readwrite");
-                const store = transaction.objectStore("exercices");
-                const request = store.put(data, key);
-
-                request.onsuccess = resolve;
-                request.onerror = reject;
-            });
-        });
-    }
-
-    // IndexedDB : Charger les données
-    function loadState(key) {
-        return openDB().then((db) => {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction("exercices", "readonly");
-                const store = transaction.objectStore("exercices");
-                const request = store.get(key);
-
-                request.onsuccess = () => resolve(request.result || []);
-                request.onerror = () => reject([]);
-            });
-        });
-    }
-
-    // IndexedDB : Ouvrir ou créer la base
-    function openDB() {
-        return new Promise((resolve, reject) => {
-            const request = indexedDB.open("exercicesDB", 1);
-
-            request.onupgradeneeded = (event) => {
-                const db = event.target.result;
-                if (!db.objectStoreNames.contains("exercices")) {
-                    db.createObjectStore("exercices");
-                }
-            };
-
-            request.onsuccess = (event) => resolve(event.target.result);
-            request.onerror = (event) => reject("Erreur d'ouverture de la base IndexedDB.");
-        });
     }
 });
 
