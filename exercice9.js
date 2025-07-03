@@ -118,8 +118,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 // Ajouter des styles CSS pour l'impression
-const style = document.createElement("style");
-style.textContent = `
+const exercice9Style = document.createElement("style");
+exercice9Style.textContent = `
     @media print {
         * {
             -webkit-print-color-adjust: exact !important;
@@ -155,4 +155,5 @@ style.textContent = `
     }
 `;
 
-document.head.appendChild(style);
+document.head.appendChild(exercice9Style);
+
