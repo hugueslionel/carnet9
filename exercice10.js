@@ -1,5 +1,3 @@
-console.log("Début du chargement de exercice10.js");
-
 document.addEventListener("DOMContentLoaded", async function () {
     console.log("DOM chargé pour exercice10");
     
@@ -187,8 +185,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 // Ajouter des styles CSS pour l'impression
-const style = document.createElement("style");
-style.textContent = `
+const exercice10Style = document.createElement("style");
+exercice10Style.textContent = `
     @media print {
         * {
             -webkit-print-color-adjust: exact !important;
@@ -224,6 +222,4 @@ style.textContent = `
     }
 `;
 
-document.head.appendChild(style);
-
-console.log("Fin du chargement de exercice10.js");
+document.head.appendChild(exercice10Style);
