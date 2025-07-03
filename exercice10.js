@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const savedPositions = await loadState(storageKey);
     const positions = savedPositions.length ? savedPositions : initialPositions;
 
-    const container = document.getElementById("exercise9-container");
+    const container = document.getElementById("exercise10-container");
 
     // Bandeau des images
     const imageBand = document.createElement("div");
