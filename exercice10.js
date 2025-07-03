@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const studentName = new URLSearchParams(window.location.search).get("name");
-    const storageKey = `exercice16_${studentName}`;
+    const storageKey = `exercice10_${studentName}`;
 
     const initialPositions = [
         { id: "seq1", src: "images6/seq1.jpeg", row: null, col: null },
