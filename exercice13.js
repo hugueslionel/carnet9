@@ -56,6 +56,15 @@ document.addEventListener("DOMContentLoaded", async function () {
             imgElement.style.objectFit = "contain";
             imgElement.style.border = "2px solid transparent";
 
+            // Vérifier si l'image est déjà sélectionnée
+            loadState(storageKey).then((currentSelection) => {
+                const isSelected = currentSelection && currentSelection.some(img => img.src === image.src);
+                if (isSelected) {
+                    imgElement.classList.add("selected");
+                    imgElement.style.border = "2px solid #007bff";
+                }
+            });
+
             imgElement.addEventListener("click", function () {
                 imgElement.classList.toggle("selected");
                 imgElement.style.border = imgElement.classList.contains("selected")
@@ -65,6 +74,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 if (imgElement.classList.contains("selected")) {
                     placeImageOnPage({ id: imgElement.id, src: imgElement.src });
                     saveImage({ id: imgElement.id, src: imgElement.src });
+                } else {
+                    removeImageFromPage(imgElement.src);
+                    removeImageFromStorage(imgElement.src);
                 }
             });
 
@@ -73,15 +85,75 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     function placeImageOnPage(image) {
-        if (!document.querySelector(`img[src='${image.src}']`)) {
+        if (!document.querySelector(`div[data-image-src='${image.src}']`)) {
+            // Créer un conteneur pour l'image et le bouton de suppression
+            const imageWrapper = document.createElement("div");
+            imageWrapper.style.position = "relative";
+            imageWrapper.style.display = "inline-block";
+            imageWrapper.style.margin = "20px";
+            imageWrapper.setAttribute("data-image-src", image.src);
+
             const imgElement = document.createElement("img");
             imgElement.src = image.src;
             imgElement.style.width = "260px";
             imgElement.style.height = "auto";
-            imgElement.style.margin = "20px";
             imgElement.style.objectFit = "contain";
             imgElement.style.border = "none";
-            container.appendChild(imgElement);
+            imgElement.style.display = "block";
+
+            // Bouton de suppression
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "×";
+            deleteButton.style.position = "absolute";
+            deleteButton.style.top = "5px";
+            deleteButton.style.right = "5px";
+            deleteButton.style.width = "25px";
+            deleteButton.style.height = "25px";
+            deleteButton.style.borderRadius = "50%";
+            deleteButton.style.backgroundColor = "red";
+            deleteButton.style.color = "white";
+            deleteButton.style.border = "none";
+            deleteButton.style.cursor = "pointer";
+            deleteButton.style.fontSize = "16px";
+            deleteButton.style.fontWeight = "bold";
+            deleteButton.style.zIndex = "10";
+
+            deleteButton.addEventListener("click", function () {
+                removeImageFromPage(image.src);
+                removeImageFromStorage(image.src);
+                updateImageSelection(image.src, false);
+            });
+
+            imageWrapper.appendChild(imgElement);
+            imageWrapper.appendChild(deleteButton);
+            container.appendChild(imageWrapper);
+        }
+    }
+
+    function removeImageFromPage(imageSrc) {
+        const imageWrapper = document.querySelector(`div[data-image-src='${imageSrc}']`);
+        if (imageWrapper) {
+            imageWrapper.remove();
+        }
+    }
+
+    function removeImageFromStorage(imageSrc) {
+        loadState(storageKey).then((currentSelection) => {
+            const updatedSelection = currentSelection.filter(img => img.src !== imageSrc);
+            saveState(storageKey, updatedSelection);
+        });
+    }
+
+    function updateImageSelection(imageSrc, isSelected) {
+        const imgElement = document.querySelector(`img[src='${imageSrc}']`);
+        if (imgElement && imgElement.parentElement === imageContainer) {
+            if (isSelected) {
+                imgElement.classList.add("selected");
+                imgElement.style.border = "2px solid #007bff";
+            } else {
+                imgElement.classList.remove("selected");
+                imgElement.style.border = "2px solid transparent";
+            }
         }
     }
 
