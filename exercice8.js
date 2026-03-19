@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function createPalette(container) {
         const paletteWrapper = document.createElement("div");
-        paletteWrapper.style.backgroundColor = "#f0f0f0";
+        paletteWrapper.style.backgroundColor = "white";
+        paletteWrapper.style.border = "3px solid #00BFFF"; // Bordure bleue par exemple
         paletteWrapper.style.padding = "20px";
         paletteWrapper.style.borderRadius = "15px";
         paletteWrapper.style.marginBottom = "30px";
